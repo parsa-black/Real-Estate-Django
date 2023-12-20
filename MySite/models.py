@@ -31,6 +31,7 @@ class Property(models.Model):
     is_available = models.BooleanField(default=True)
     is_submit = models.BooleanField(default=False, editable=False)
     house_owner = models.ForeignKey(userProfile, on_delete=models.CASCADE)
+    house_review = models.FloatField(editable=False, blank=True)
 
     def __str__(self):
         return f"{self.title} - {self.house_owner.user.username}"
@@ -64,4 +65,3 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.property.title} - {self.tenant.user.username}"
-    
