@@ -3,6 +3,8 @@ from django.core.validators import MaxValueValidator
 
 
 class Users(models.Model):
+    first_name = models.CharField(max_length=25)
+    last_name = models.CharField(max_length=25)
     username = models.CharField(max_length=30, blank=True, primary_key=True, unique=True)
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=10, unique=True)  # 0(912 345 6789)
@@ -19,6 +21,11 @@ class Users(models.Model):
     def __str__(self):
         return self.username
 
+    class Meta:
+        indexes = [
+            models.Index(fields=['first_name', 'last_name'])
+        ]
+
 
 class Property(models.Model):
     title = models.CharField(max_length=255)
@@ -34,11 +41,16 @@ class Property(models.Model):
     garage = models.BooleanField()
     is_available = models.BooleanField(default=True)
     is_submit = models.BooleanField(default=False, editable=False)
-    house_owner = models.ForeignKey(Users, on_delete=models.CASCADE)
     house_review = models.FloatField(editable=False, blank=True)
+    house_owner = models.ForeignKey(Users, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.title} - {self.house_owner.username}"
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['title'])
+        ]
 
 
 class Document(models.Model):
