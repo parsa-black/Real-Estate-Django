@@ -12,11 +12,13 @@ class Users(models.Model):
     Owner = 'O'
     Tenant = 'T'
     User = 'U'
-    Role = [
+    ROLE_CHOICES = [
         (Owner, 'Owner'),
         (Tenant, 'Tenant'),
         (User, 'User'),
     ]
+    role = models.CharField(
+        max_length=1, choices=ROLE_CHOICES, default=User)
 
     def __str__(self):
         return self.username
@@ -39,9 +41,9 @@ class Property(models.Model):
     yard_area = models.PositiveIntegerField()
     year = models.PositiveIntegerField(validators=[MaxValueValidator(2099)])
     garage = models.BooleanField()
-    is_available = models.BooleanField(default=True)
-    is_submit = models.BooleanField(default=False, editable=False)
-    house_review = models.FloatField(editable=False, blank=True)
+    is_available = models.BooleanField(default=False)
+    is_submit = models.BooleanField(default=False)
+    house_review = models.FloatField(null=True, blank=True)
     house_owner = models.ForeignKey(Users, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -57,6 +59,7 @@ class Document(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     uploader = models.ForeignKey(Users, on_delete=models.CASCADE)
     file = models.FileField(upload_to='documents/')
+    status = models.BooleanField(default=False)
 
 
 class Review(models.Model):
