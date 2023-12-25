@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from . models import Property
 
 
-def hello_world(request):
-    return render(request, 'list.html')
+def list_house(request):
+
+    houses = Property.objects.all()
+
+    context = {'data_list': houses}
+    return render(request, 'list.html', context)

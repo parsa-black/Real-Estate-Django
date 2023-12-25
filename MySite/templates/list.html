@@ -5,6 +5,34 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Hello this is list</h1>
+    <h1>Your Model List</h1>
+    <table  border="2px">
+        <thead>
+            <tr>
+                <th>Title </th>
+                <th>Rent Price</th>
+                <th>City</th>
+                <th>Hood</th>
+                <th>Bedrooms</th>
+                <th>Bathrooms</th>
+                <th>year</th>
+                <th>Owner</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in data_list %}
+                <tr>
+                    <td>{{ item.title }}</td>
+                    <td>{{ item.rent_price }}</td>
+                    <td>{{ item.house_city }}</td>
+                    <td>{{ item.house_address }}</td>
+                    <td>{{ item.bedrooms }}</td>
+                    <td>{{ item.bathrooms }}</td>
+                    <td>{{ item.year }}</td>
+                    <td>{{ item.house_owner_id }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
