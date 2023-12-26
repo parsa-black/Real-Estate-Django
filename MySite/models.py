@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
+from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db.models import Avg
 
 
@@ -8,7 +9,11 @@ class Users(models.Model):
     last_name = models.CharField(max_length=25)
     username = models.CharField(max_length=30, blank=True, primary_key=True, unique=True)
     birth_date = models.DateField(null=True, blank=True)
-    phone_number = models.CharField(max_length=10, unique=True)  # 0(912 345 6789)
+    phone_number = models.CharField(max_length=10, unique=True,
+                                    validators=[
+                                        MinLengthValidator(limit_value=10),
+                                        MaxLengthValidator(limit_value=10),
+                                    ])  # 0(912 345 6789)
     email = models.EmailField(max_length=255, unique=True)
     Owner = 'O'
     Tenant = 'T'
@@ -96,8 +101,8 @@ class Review(models.Model):
     def save(self, *args, **kwargs):
         # Calculate the average rating
         criteria_count = 6  # Number of criteria for evaluation
-        total_rating = self.quality + self.location + self.price + self.landlord \
-                        + self.neighborhood + self.Transportation
+        total_rating = self.quality + self.location + self.price + self.landlord + self.neighborhood \
+                                    + self.Transportation
         self.rating = round(total_rating / criteria_count, 2)
 
         super().save(*args, **kwargs)
