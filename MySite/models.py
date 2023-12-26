@@ -53,6 +53,7 @@ class Property(models.Model):
         indexes = [
             models.Index(fields=['title'])
         ]
+        ordering = ["is_submit", "is_available"]
 
 
 class Document(models.Model):
@@ -60,6 +61,12 @@ class Document(models.Model):
     uploader = models.ForeignKey(Users, on_delete=models.CASCADE)
     file = models.FileField(upload_to='documents/')
     status = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.property} - {self.uploader.username}"
+
+    class Meta:
+        ordering = ['status']
 
 
 class Review(models.Model):
