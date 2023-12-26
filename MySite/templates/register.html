@@ -36,7 +36,7 @@
             color: #333;
         }
 
-        input {
+        input, button {
             width: 100%;
             padding: 8px;
             margin-bottom: 16px;
@@ -45,13 +45,13 @@
             border-radius: 4px;
         }
 
-        input[type="submit"] {
+        button[type="submit"] {
             background-color: #4caf50;
             color: white;
             cursor: pointer;
         }
 
-        input[type="submit"]:hover {
+        button[type="submit"]:hover {
             background-color: #45a049;
         }
     </style>
@@ -60,25 +60,36 @@
 
 <form method="post">
     {% csrf_token %}
-    <label for="first_name">First Name:</label>
-    <input type="text" id="first_name" name="first_name" required>
-
-    <label for="last_name">Last Name:</label>
-    <input type="text" id="last_name" name="last_name" required>
-
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="username" required>
-
-    <label for="birth_date">Birth Date:</label>
-    <input type="date" id="birth_date" name="birth_date">
-
-    <label for="phone_number">Phone Number:</label>
-    <input type="tel" id="phone_number" name="phone_number" pattern="[0-9]{10}" required>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-
-    <input type="submit" value="Register">
+    <div>
+        {#{{ user_form.first_name.label_tag }}#}
+        {{ user_form.first_name}}
+        {{ user_form.first_name.errors }}
+    </div>
+    <div>
+        {#{{ user_form.last_name.label_tag }}#}
+        {{ user_form.last_name}}
+        {{ user_form.last_name.errors }}
+    </div>
+    <div>
+        {#{{ user_form.username.label_tag }}#}
+        {{ user_form.username}}
+        {{ user_form.username.errors }}
+    </div>
+    <div>
+        {#{{ user_form.birth_date.label_tag }}#}
+        {{ user_form.birth_date}}
+    </div>
+    <div>
+        {#{{ user_form.phone_number.label_tag }}#}
+        {{ user_form.phone_number}}
+        {{ user_form.phone_number.errors}}
+    </div>
+    <div>
+        {#{{ user_form.email.label_tag }}#}
+        {{ user_form.email}}
+        {{ user_form.email.errors }}
+    </div>
+    <button type="submit" value="Register"> Submit </button>
 </form>
 
 </body>
