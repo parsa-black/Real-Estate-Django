@@ -1,8 +1,8 @@
 from django import forms
-from django.core.validators import MinLengthValidator, MaxLengthValidator
+from .models import Users
 
 
-class UserForm(forms.Form):
+class UserForm(forms.ModelForm):
     first_name = forms.CharField(
         label='FirstName',
         max_length=25,
@@ -44,3 +44,7 @@ class UserForm(forms.Form):
         error_messages={'required': 'Please Enter Your Email Address',
                         'max_length': 'Email Max Length Must Be 255 Characters'}
     )
+
+    class Meta:
+        model = Users
+        fields = ['first_name', 'last_name', 'username', 'birth_date', 'phone_number', 'email']
