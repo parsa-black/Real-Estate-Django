@@ -1,5 +1,6 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
+from django.db.models import Avg
 
 
 class Users(models.Model):
@@ -24,6 +25,7 @@ class Users(models.Model):
         return self.username
 
     class Meta:
+        verbose_name = 'User'
         indexes = [
             models.Index(fields=['first_name', 'last_name'])
         ]
@@ -34,7 +36,7 @@ class Property(models.Model):
     description = models.TextField()
     rent_price = models.DecimalField(max_digits=10, decimal_places=2)
     house_city = models.CharField(max_length=30)
-    house_address = models.TextField()
+    house_address = models.CharField(max_length=255)
     bedrooms = models.PositiveIntegerField()
     bathrooms = models.PositiveIntegerField()
     area = models.PositiveIntegerField()
@@ -45,6 +47,14 @@ class Property(models.Model):
     is_submit = models.BooleanField(default=False)
     house_review = models.FloatField(null=True, blank=True)
     house_owner = models.ForeignKey(Users, on_delete=models.CASCADE)
+
+    def update_average_rating(self):
+        # Retrieve the average rating for the property
+        average_rating = Review.objects.filter(property=self).aggregate(Avg('rating'))['rating__avg']
+
+        # Update the house_review field
+        self.house_review = round(average_rating, 2) if average_rating else 0
+        self.save()
 
     def __str__(self):
         return f"{self.title} - {self.house_owner.username}"
@@ -61,6 +71,7 @@ class Document(models.Model):
     uploader = models.ForeignKey(Users, on_delete=models.CASCADE)
     file = models.FileField(upload_to='documents/')
     status = models.BooleanField(default=False)
+    time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.property} - {self.uploader.username}"
@@ -85,10 +96,14 @@ class Review(models.Model):
     def save(self, *args, **kwargs):
         # Calculate the average rating
         criteria_count = 6  # Number of criteria for evaluation
-        total_rating = self.quality + self.location + self.price + self.landlord\
-                                    + self.neighborhood + self.Transportation
-        self.rating = total_rating / criteria_count
+        total_rating = self.quality + self.location + self.price + self.landlord \
+                        + self.neighborhood + self.Transportation
+        self.rating = round(total_rating / criteria_count, 2)
+
         super().save(*args, **kwargs)
+
+        # Update the average rating for the associated Property
+        self.property.update_average_rating()
 
     def __str__(self):
         return f"{self.property.title} - {self.tenant.username}"
