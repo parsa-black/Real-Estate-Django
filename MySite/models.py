@@ -7,7 +7,8 @@ from django.db.models import Avg
 class Users(models.Model):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
-    username = models.CharField(max_length=30, blank=True, primary_key=True, unique=True)
+    username = models.CharField(max_length=30, unique=True)
+    password = models.CharField(max_length=255)
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=10, unique=True,
                                     validators=[

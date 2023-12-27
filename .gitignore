@@ -2,3 +2,5 @@
 */__pycache__/
 /__pycache__/
 MySite/migrations/__pycache__/
+venv
+docker-compose.yml

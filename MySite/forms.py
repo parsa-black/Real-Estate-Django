@@ -24,9 +24,16 @@ class UserForm(forms.ModelForm):
         error_messages={'required': 'Please Enter Your UserName',
                         'max_length': 'UserName Max Length Must Be 30 Characters'}
     )
+    password = forms.CharField(
+        label='Password',
+        max_length=30,
+        widget=forms.TextInput(attrs={'placeholder': 'Password'}),
+        error_messages={'required': 'Please Enter Your Password',
+                        'max_length': 'Password Max Length Must Be 30 Characters'}
+    )
     birth_date = forms.DateField(
         label='Birth Date',
-        widget=forms.DateInput(attrs={'placeholder': 'BirthDate'})
+        widget=forms.DateInput(attrs={'placeholder': 'BirthDate', 'type': 'date'})
     )
     phone_number = forms.CharField(
         label='Phone Number',
@@ -47,4 +54,29 @@ class UserForm(forms.ModelForm):
 
     class Meta:
         model = Users
-        fields = ['first_name', 'last_name', 'username', 'birth_date', 'phone_number', 'email']
+        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email']
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Username",
+                "class": "form-control"
+            }
+        ))
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={
+                "placeholder": "Password",
+                "class": "form-control"
+            }
+        ))
+    remember = forms.BooleanField(
+        required=False,
+        widget=forms.CheckboxInput(),
+    )
+
+    class Meta:
+        model = Users
+        fields = ['username', 'password']

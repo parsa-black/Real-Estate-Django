@@ -1,96 +1,57 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" dir="ltr">
+  <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Registration</title>
-
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #333;
-        }
-
-        input, button {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-
-        button[type="submit"] {
-            background-color: #4caf50;
-            color: white;
-            cursor: pointer;
-        }
-
-        button[type="submit"]:hover {
-            background-color: #45a049;
-        }
-    </style>
-</head>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
 <body>
-
-<form method="post">
-    {% csrf_token %}
-    <div>
-        {#{{ user_form.first_name.label_tag }}#}
-        {{ user_form.first_name}}
-        {{ user_form.first_name.errors }}
+  <div class="container">
+    <div class="title">Registration</div>
+    <div class="content">
+      <form method= POST>
+        {% csrf_token %}
+        <div class="user-details">
+          <div class="input-box">
+            <span class="details">First Name</span>
+            {{user_form.first_name}}
+          </div>
+          <div class="input-box">
+            <span class="details">Last Name</span>
+            {{user_form.last_name}}
+          </div>
+          <div class="input-box">
+            <span class="details">Username</span>
+            {{user_form.username}}
+          </div>
+          <div class="input-box">
+            <span class="details">Password</span>
+            {{user_form.password}}
+          </div>
+          <div class="input-box">
+            <span class="details">Email</span>
+            {{user_form.email}}
+          </div>
+          <div class="input-box">
+            <span class="details">Phone Number</span>
+            {{user_form.phone_number}}
+          </div>
+          <div class="input-box">
+            <span class="details">Birth Date</span>
+            {{user_form.birth_date}}
+          </div>
+          <div class="input-box">
+            <span class="details">Confirm Password</span>
+            <!-- <input type="text" placeholder="Confirm your password" required> -->
+          </div>
+        </div>
+        <div class="button">
+          <input type="submit" value="Register">
+        </div>
+      </form>
     </div>
-    <div>
-        {#{{ user_form.last_name.label_tag }}#}
-        {{ user_form.last_name}}
-        {{ user_form.last_name.errors }}
-    </div>
-    <div>
-        {#{{ user_form.username.label_tag }}#}
-        {{ user_form.username}}
-        {{ user_form.username.errors }}
-    </div>
-    <div>
-        {#{{ user_form.birth_date.label_tag }}#}
-        {{ user_form.birth_date}}
-    </div>
-    <div>
-        {#{{ user_form.phone_number.label_tag }}#}
-        {{ user_form.phone_number}}
-        {{ user_form.phone_number.errors}}
-    </div>
-    <div>
-        {#{{ user_form.email.label_tag }}#}
-        {{ user_form.email}}
-        {{ user_form.email.errors }}
-    </div>
-    <button type="submit" value="Register"> Submit </button>
-</form>
+  </div>
 
 </body>
 </html>
