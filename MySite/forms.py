@@ -1,5 +1,5 @@
 from django import forms
-from .models import ProfileUser
+from .models import User, ProfileUser
 
 
 class UserForm(forms.ModelForm):
@@ -31,6 +31,20 @@ class UserForm(forms.ModelForm):
         error_messages={'required': 'Please Enter Your Password',
                         'max_length': 'Password Max Length Must Be 30 Characters'}
     )
+    email = forms.EmailField(
+        label='Email',
+        max_length=255,
+        widget=forms.EmailInput(attrs={'placeholder': 'Email Address'}),
+        error_messages={'required': 'Please Enter Your Email Address',
+                        'max_length': 'Email Max Length Must Be 255 Characters'}
+    )
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'password', 'email']
+
+
+class ProfileForm(forms.ModelForm):
     birth_date = forms.DateField(
         label='Birth Date',
         widget=forms.DateInput(attrs={'placeholder': 'BirthDate', 'type': 'date'})
@@ -44,17 +58,10 @@ class UserForm(forms.ModelForm):
                         'max_length': 'Phone Number must be 10 Characters',
                         'min_length': 'Phone Number must be 10 Characters'}
     )
-    email = forms.EmailField(
-        label='Email',
-        max_length=255,
-        widget=forms.EmailInput(attrs={'placeholder': 'Email Address'}),
-        error_messages={'required': 'Please Enter Your Email Address',
-                        'max_length': 'Email Max Length Must Be 255 Characters'}
-    )
 
     class Meta:
         model = ProfileUser
-        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email']
+        fields = ['birth_date', 'phone_number']
 
 
 class LoginForm(forms.Form):
@@ -78,5 +85,5 @@ class LoginForm(forms.Form):
     )
 
     class Meta:
-        model = ProfileUser
+        model = User
         fields = ['username', 'password']
