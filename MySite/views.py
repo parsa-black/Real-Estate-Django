@@ -6,8 +6,6 @@ from .forms import LoginForm, UserForm
 from django.contrib.auth.hashers import make_password, check_password
 
 
-
-
 def homepage(request):
     return render(request, 'home.html')
 
@@ -27,7 +25,7 @@ def register(request):
         user_form = UserForm(request.POST)
         if user_form.is_valid():
             user = user_form.save(commit=False)
-            hashed_password = make_password(user_form.cleaned_data['password'])  # Create a user object but don't save it yet
+            hashed_password = make_password(user_form.cleaned_data['password'])  # Create a user object but don't save
             user.password = hashed_password
             user.save()
             return redirect('home-page')
@@ -36,6 +34,7 @@ def register(request):
     return render(request, 'register.html', {
         'user_form': user_form
     })
+
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -58,7 +57,7 @@ def login_view(request):
                 password_matches = check_password(password, user.password)
                 if password_matches: 
                     return redirect('home-page')
-                msg= 'Invalid credentials'
+                msg = 'Invalid credentials'
             else:
                 msg = 'Invalid credentials'
         else:
