@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Property, Users
+from .models import Property, ProfileUser
 from .forms import LoginForm, UserForm
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -50,8 +50,8 @@ def login_view(request):
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
             try:
-                user = Users.objects.get(username=username)
-            except Users.DoesNotExist:
+                user = ProfileUser.objects.get(username=username)
+            except ProfileUser.DoesNotExist:
                 user = None
             if user is not None:
                 password_matches = check_password(password, user.password)

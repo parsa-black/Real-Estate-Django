@@ -1,5 +1,5 @@
 from django import forms
-from .models import Users
+from .models import ProfileUser
 
 
 class UserForm(forms.ModelForm):
@@ -53,7 +53,7 @@ class UserForm(forms.ModelForm):
     )
 
     class Meta:
-        model = Users
+        model = ProfileUser
         fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email']
 
 
@@ -78,5 +78,5 @@ class LoginForm(forms.Form):
     )
 
     class Meta:
-        model = Users
+        model = ProfileUser
         fields = ['username', 'password']

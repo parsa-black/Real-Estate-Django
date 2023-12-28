@@ -4,7 +4,7 @@ from django.db.models import Count
 from . import models
 
 
-@admin.register(models.Users)
+@admin.register(models.ProfileUser)
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'role', 'property_count']
     list_editable = ['role']
