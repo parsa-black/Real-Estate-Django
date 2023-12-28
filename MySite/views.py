@@ -2,7 +2,7 @@
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Property, User
-from .forms import LoginForm, UserForm, ProfileForm
+from .forms import LoginForm, UserForm, ProfileForm, PropertyForm
 from django.contrib.auth.hashers import make_password, check_password
 
 
@@ -68,3 +68,17 @@ def login_view(request):
             msg = 'Error validating the form'
 
     return render(request, 'login.html', {'form': form, 'msg': msg})
+
+
+def property_register(request):
+    if request.method == 'POST':
+        property_form = PropertyForm(request.POST)
+        if property_form.is_valid():
+            property_form.save()
+            return redirect('home-page')
+    else:
+        property_form = PropertyForm()
+
+    return render(request, 'propertyRegister.html', {
+        'property_form': property_form
+    })

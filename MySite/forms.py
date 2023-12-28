@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, ProfileUser
+from .models import User, ProfileUser, Property
 
 
 class UserForm(forms.ModelForm):
@@ -86,3 +86,75 @@ class LoginForm(forms.Form):
     class Meta:
         model = User
         fields = ['username', 'password']
+
+
+class PropertyForm(forms.ModelForm):
+    title = forms.CharField(
+        label='Property Title',
+        max_length=255,
+        widget=forms.TextInput(attrs={'placeholder': 'Property Title'}),
+        error_messages={'required': 'Please Enter The Title',
+                        'max_length': 'Max Length Must Be 255'}
+    )
+    description = forms.Textarea(
+        attrs={'placeholder': 'Description'}
+    )
+    rent_price = forms.DecimalField(
+        label='Rent Price',
+        max_digits=10,
+        decimal_places=2,
+        error_messages={'required': 'Please Property Must Have Rent Price'}
+    )
+    house_city = forms.CharField(
+        label='House City',
+        max_length=30,
+        widget=forms.TextInput(attrs={'placeholder': 'City'}),
+        error_messages={'required': 'Please Enter House City',
+                        'max_length': 'Max Length Must Be 30 Characters'}
+    )
+    house_address = forms.CharField(
+        label='House Address',
+        max_length=255,
+        widget=forms.TextInput(attrs={'placeholder': 'Address'}),
+        error_messages={'max_length': 'Max Length Must Be 255'}
+    )
+    bedrooms = forms.IntegerField(
+        min_value=0,
+        max_value=20,
+        error_messages={'required': 'House Must Have Bedrooms',
+                        'max_value': 'Max is 20',
+                        'min_value': 'Min is 0'}
+    )
+    bathrooms = forms.IntegerField(
+        min_value=0,
+        max_value=20,
+        error_messages={'required': 'House Must Have Bathroom',
+                        'max_value': 'Max is 20',
+                        'min_value': 'Min is 0'}
+    )
+    area = forms.IntegerField(
+        min_value=0,
+        error_messages={'required': 'Property Must Have Area',
+                        'max_value': 'Size Must Be Positive'}
+    )
+    yard_area = forms.IntegerField(
+        min_value=0,
+        initial=0,
+        required=False,
+        error_messages={'min_value': 'Size Must Be Positive'}
+    )
+    year = forms.IntegerField(
+        min_value=1900,
+        max_value=2099,
+        error_messages={'required': 'Property Must Have Built Year',
+                        'max_value': 'Max is 2099',
+                        'min_value': 'Min is 1900'}
+    )
+    garage = forms.BooleanField(
+        required=False
+    )
+
+    class Meta:
+        model = Property
+        fields = ['title', 'description', 'rent_price', 'house_city', 'house_address', 'bedrooms', 'bathrooms',
+                  'area', 'yard_area', 'year', 'garage']
