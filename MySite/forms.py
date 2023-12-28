@@ -31,20 +31,6 @@ class UserForm(forms.ModelForm):
         error_messages={'required': 'Please Enter Your Password',
                         'max_length': 'Password Max Length Must Be 30 Characters'}
     )
-    email = forms.EmailField(
-        label='Email',
-        max_length=255,
-        widget=forms.EmailInput(attrs={'placeholder': 'Email Address'}),
-        error_messages={'required': 'Please Enter Your Email Address',
-                        'max_length': 'Email Max Length Must Be 255 Characters'}
-    )
-
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'email']
-
-
-class ProfileForm(forms.ModelForm):
     birth_date = forms.DateField(
         label='Birth Date',
         widget=forms.DateInput(attrs={'placeholder': 'BirthDate', 'type': 'date'})
@@ -58,10 +44,23 @@ class ProfileForm(forms.ModelForm):
                         'max_length': 'Phone Number must be 10 Characters',
                         'min_length': 'Phone Number must be 10 Characters'}
     )
+    email = forms.EmailField(
+        label='Email',
+        max_length=255,
+        widget=forms.EmailInput(attrs={'placeholder': 'Email Address'}),
+        error_messages={'required': 'Please Enter Your Email Address',
+                        'max_length': 'Email Max Length Must Be 255 Characters'}
+    )
 
     class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email']
+
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
         model = ProfileUser
-        fields = ['birth_date', 'phone_number']
+        fields = ['birth_date', 'phone_number']  # Add other fields as needed
 
 
 class LoginForm(forms.Form):
