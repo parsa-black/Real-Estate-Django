@@ -96,8 +96,12 @@ class PropertyForm(forms.ModelForm):
         error_messages={'required': 'Please Enter The Title',
                         'max_length': 'Max Length Must Be 255'}
     )
-    description = forms.Textarea(
-        attrs={'placeholder': 'Description'}
+    description = forms.CharField(
+        label='Description',
+        max_length=400,
+        widget=forms.Textarea(attrs={'placeholder': 'Descriptions'}),
+        error_messages={'required': 'Please Enter The Description',
+                        'max_length': 'Description Must Be Under 400 Characters'}
     )
     rent_price = forms.DecimalField(
         label='Rent Price',
