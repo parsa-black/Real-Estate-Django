@@ -1,40 +1,57 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MaxValueValidator
 from django.core.validators import MinLengthValidator, MaxLengthValidator
 from django.db.models import Avg
 
 
-class Users(models.Model):
+class User(AbstractUser):
     first_name = models.CharField(max_length=25)
     last_name = models.CharField(max_length=25)
     username = models.CharField(max_length=30, unique=True)
     password = models.CharField(max_length=255)
+    email = models.EmailField(max_length=255, unique=True)
+
+
+class ProfileUser(models.Model):
     birth_date = models.DateField(null=True, blank=True)
     phone_number = models.CharField(max_length=10, unique=True,
                                     validators=[
                                         MinLengthValidator(limit_value=10),
                                         MaxLengthValidator(limit_value=10),
                                     ])  # 0(912 345 6789)
-    email = models.EmailField(max_length=255, unique=True)
     Owner = 'O'
     Tenant = 'T'
-    User = 'U'
+    UserNormal = 'U'
     ROLE_CHOICES = [
         (Owner, 'Owner'),
         (Tenant, 'Tenant'),
-        (User, 'User'),
+        (UserNormal, 'User'),
     ]
     role = models.CharField(
-        max_length=1, choices=ROLE_CHOICES, default=User)
+        max_length=1, choices=ROLE_CHOICES, default=UserNormal)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.username
+        return f'{self.user.username}'
+
+    def first_name(self):
+        return self.user.first_name
+
+    def last_name(self):
+        return self.user.last_name
+
+    def username(self):
+        return self.user.username
+
+    def password(self):
+        return self.user.password
+
+    def email(self):
+        return self.user.email
 
     class Meta:
         verbose_name = 'User'
-        indexes = [
-            models.Index(fields=['first_name', 'last_name'])
-        ]
 
 
 class Property(models.Model):
@@ -52,7 +69,7 @@ class Property(models.Model):
     is_available = models.BooleanField(default=False)
     is_submit = models.BooleanField(default=False)
     house_review = models.FloatField(null=True, blank=True)
-    house_owner = models.ForeignKey(Users, on_delete=models.CASCADE)
+    house_owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
 
     def update_average_rating(self):
         # Retrieve the average rating for the property
@@ -74,7 +91,7 @@ class Property(models.Model):
 
 class Document(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    uploader = models.ForeignKey(Users, on_delete=models.CASCADE)
+    uploader = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     file = models.FileField(upload_to='documents/')
     status = models.BooleanField(default=False)
     time = models.DateTimeField(auto_now_add=True)
@@ -88,7 +105,7 @@ class Document(models.Model):
 
 class Review(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    tenant = models.ForeignKey(Users, on_delete=models.CASCADE)
+    tenant = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     quality = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
     location = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
     price = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
