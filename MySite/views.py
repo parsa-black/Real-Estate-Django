@@ -1,4 +1,5 @@
 # from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Property, User
@@ -70,10 +71,12 @@ def login_view(request):
     return render(request, 'login.html', {'form': form, 'msg': msg})
 
 
+@login_required()
 def property_register(request):
     if request.method == 'POST':
         property_form = PropertyForm(request.POST)
         if property_form.is_valid():
+            property_form.instance.house_owner = request.user
             property_form.save()
             return redirect('home-page')
     else:
