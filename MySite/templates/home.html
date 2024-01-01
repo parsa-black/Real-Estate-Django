@@ -6,17 +6,46 @@
     <title>Rent House</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background: linear-gradient(to right, #8e44ad, #3498db);
+            color: #fff;
         }
 
         header {
-            background-color: #333;
-            color: #fff;
             text-align: center;
             padding: 1em;
+        }
+
+        header h1 {
+            font-size: 2em;
+            margin: 0.5em 0;
+            color: #fff;
+        }
+
+        header p {
+            margin: 0;
+            font-size: 1.2em;
+            color: #ecf0f1;
+        }
+
+        nav {
+            background: linear-gradient(to right, #3498db, #2980b9);
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #ecf0f1;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #fff;
         }
 
         section {
@@ -25,32 +54,57 @@
 
         .property {
             border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 8px;
             margin-bottom: 20px;
             overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            background: #fff;
+        }
+
+        .property:hover {
+            transform: translateY(-5px);
         }
 
         .property img {
             width: 100%;
             height: auto;
+            border-bottom: 1px solid #ddd;
         }
 
         .property-info {
             padding: 15px;
         }
 
-        h2, p {
+        h2 {
+            margin: 0 0 10px;
+            color: #333;
+        }
+
+        p {
             margin: 0;
+            color: #555;
         }
 
         footer {
-            background-color: #333;
-            color: #fff;
             text-align: center;
             padding: 1em;
             position: fixed;
             bottom: 0;
             width: 100%;
+            background: linear-gradient(to right, #8e44ad, #3498db);
+        }
+
+        footer p {
+            margin: 0;
+            color: #fff;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            nav a {
+                margin: 0 10px;
+            }
         }
     </style>
 </head>
@@ -58,12 +112,29 @@
 
     <header>
         <h1>Rent House</h1>
-        <p>Find your perfect home for rent</p>
+        <p>Discover Your Perfect Rental Home</p>
+        {% if request.user.is_authenticated %}
+            <p>Welcome, {{ request.user.username}}</p>
+            <!-- Other authenticated user content -->
+        {% endif %}
     </header>
 
+    <!-- Navbar -->
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Search</a>
+        <a href="#">Profile</a>
+        <a href="{% url 'logout-page' %}">logout</a>
+    </nav>
 
+    <!-- Content Section -->
+    <section>
+        <!-- Your content goes here -->
+    </section>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2023 Rent House. All rights reserved.</p>
+        <p>&copy; 2023 Rent House. All Rights Reserved.</p>
     </footer>
 
 </body>

@@ -4,11 +4,17 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Property, User
 from .forms import LoginForm, UserForm, ProfileForm, PropertyForm
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password, check_password
 
 
 def homepage(request):
     return render(request, 'home.html')
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('login-page')
 
 
 def list_house(request):
@@ -54,15 +60,10 @@ def login_view(request):
         if form.is_valid():
             username = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password')
-            try:
-                user = User.objects.get(username=username)
-            except User.DoesNotExist:
-                user = None
+            user = authenticate(username=username, password=password)
             if user is not None:
-                password_matches = check_password(password, user.password)
-                if password_matches: 
-                    return redirect('home-page')
-                msg = 'Invalid credentials'
+                login(request, user)
+                return redirect('home-page')
             else:
                 msg = 'Invalid credentials'
         else:
