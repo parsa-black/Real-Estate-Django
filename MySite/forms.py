@@ -120,7 +120,8 @@ class PropertyForm(forms.ModelForm):
         label='House Address',
         max_length=255,
         widget=forms.TextInput(attrs={'placeholder': 'Address'}),
-        error_messages={'max_length': 'Max Length Must Be 255'}
+        error_messages={'required': 'Please Enter Address',
+                        'max_length': 'Max Length Must Be 255'}
     )
     bedrooms = forms.IntegerField(
         min_value=0,

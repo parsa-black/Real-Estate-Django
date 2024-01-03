@@ -59,7 +59,7 @@ class Property(models.Model):
     description = models.TextField(max_length=400)
     rent_price = models.DecimalField(max_digits=10, decimal_places=2)
     house_city = models.CharField(max_length=30)
-    house_address = models.CharField(max_length=255, blank=True, null=True)
+    house_address = models.CharField(max_length=255)
     bedrooms = models.PositiveIntegerField()
     bathrooms = models.PositiveIntegerField()
     area = models.PositiveIntegerField()
