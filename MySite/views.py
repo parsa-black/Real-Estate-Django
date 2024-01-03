@@ -89,4 +89,4 @@ def property_register(request):
             'property_form': property_form
         })
     else:
-        return render(request, 'access_denied.html')
+        return render(request, 'access_denied.html', {})
