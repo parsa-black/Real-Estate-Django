@@ -1,10 +1,101 @@
+<!-- review_form.html -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            resize: none;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <title>Review Form</title>
 </head>
 <body>
-    <h1>Review Test</h1>
+    <form method="post">
+        {% csrf_token %}
+<div class="property-details">
+          <div class="input-box">
+            <span class="details">Quality</span>
+            {{review_form.quality}}
+          </div>
+          <div class="input-box">
+            <span class="details">Location</span>
+            {{review_form.location}}
+          </div>
+          <div class="input-box">
+            <span class="details">Rent Price</span>
+            {{review_form.price}}
+          </div>
+          <div class="input-box">
+            <span class="details">Neighborhood</span>
+            {{review_form.neighborhood}}
+          </div>
+          <div class="input-box">
+            <span class="details">Transportation</span>
+            {{review_form.transportation}}
+          </div>
+            <div class="input-box">
+                <span class="details">Comment</span>
+                {{review_form.comment}}
+            </div>
+            <div class="input-box">
+                <span class="details">File</span>
+                {{document_form.file}}
+            </div>
+            <div class="input-box">
+                <span class="details">Property</span>
+                {{document_form.property}}
+            </div>
+        </div>
+        <div class="button">
+          <input type="submit" value="Register">
+        </div>
+    </form>
 </body>
 </html>

@@ -191,7 +191,8 @@ class ReviewForm(forms.ModelForm):
         widget=forms.RadioSelect
     )
     transportation = forms.ChoiceField(
-        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')]
+        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
+        widget=forms.RadioSelect
     )
     comment = forms.CharField(
         label='Comment',
