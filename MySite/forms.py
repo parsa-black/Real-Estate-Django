@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, ProfileUser, Property
+from .models import User, ProfileUser, Property, Review
 
 
 class UserForm(forms.ModelForm):
@@ -171,3 +171,36 @@ class PropertyForm(forms.ModelForm):
         model = Property
         fields = ['title', 'description', 'rent_price', 'house_city', 'house_address', 'bedrooms', 'bathrooms',
                   'area', 'yard_area', 'year', 'garage']
+
+
+class ReviewForm(forms.ModelForm):
+    quality = forms.ChoiceField(
+        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
+        widget=forms.RadioSelect,
+    )
+    location = forms.ChoiceField(
+        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
+        widget=forms.RadioSelect
+    )
+    price = forms.ChoiceField(
+        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
+        widget=forms.RadioSelect
+    )
+    neighborhood = forms.ChoiceField(
+        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
+        widget=forms.RadioSelect
+    )
+    transportation = forms.ChoiceField(
+        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')]
+    )
+    comment = forms.CharField(
+        label='Comment',
+        max_length=400,
+        widget=forms.Textarea(attrs={'placeholder': 'Comment'}),
+        error_messages={'required': 'Please provide your Comment',
+                        'max_length': 'Description Must Be Under 400 Characters'}
+    )
+
+    class Meta:
+        model = Review
+        fields = ['quality', 'location', 'price', 'neighborhood', 'transportation', 'comment']

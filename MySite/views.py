@@ -2,10 +2,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Property, User
+from .models import Property
 from .forms import LoginForm, UserForm, ProfileForm, PropertyForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password
 
 
 def homepage(request):
@@ -88,5 +88,14 @@ def property_register(request):
         return render(request, 'propertyRegister.html', {
             'property_form': property_form
         })
+    else:
+        return render(request, 'access_denied.html', {})
+
+
+@login_required()
+def review_submit(request):
+    if request.user.profileuser.role == 'T':
+        if request.method == 'POST':
+            pass
     else:
         return render(request, 'access_denied.html', {})
