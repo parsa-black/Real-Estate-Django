@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Property
-from .forms import LoginForm, UserForm, ProfileForm, PropertyForm
+from .forms import LoginForm, UserForm, ProfileForm, PropertyForm, ReviewForm, DocumentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 
@@ -96,6 +96,27 @@ def property_register(request):
 def review_submit(request):
     if request.user.profileuser.role == 'T':
         if request.method == 'POST':
-            pass
+            review_form = ReviewForm(request.POST)
+            document_form = DocumentForm(request.user, request.POST, request.FILES)
+
+            if review_form.is_valid() and document_form.is_valid():
+                # Save the review
+                review = review_form.save(commit=False)
+                review.tenant = request.user.profileuser
+                review.save()
+
+                # Save the document
+                document = document_form.save(commit=False)
+                review.property = document.property
+                document.uploader = request.user.profileuser
+                document.save()
+
+                return redirect('home-page')  # Redirect to a success page or another view
+
+        else:
+            review_form = ReviewForm(request.user)
+            document_form = DocumentForm()
+
+        return render(request, 'review.html', {'review_form': review_form, 'document_form': document_form})
     else:
         return render(request, 'access_denied.html', {})

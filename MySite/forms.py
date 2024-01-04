@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, ProfileUser, Property, Review
+from .models import User, ProfileUser, Property, Review, Document
 
 
 class UserForm(forms.ModelForm):
@@ -203,4 +203,15 @@ class ReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ['quality', 'location', 'price', 'neighborhood', 'transportation', 'comment']
+        fields = ['quality', 'location', 'price', 'neighborhood', 'transportation', 'comment','property']
+
+    def __init__(self, user, *args, **kwargs):
+        super(ReviewForm, self).__init__(*args, **kwargs)
+        # Restrict property choices based on user
+        self.fields['property'].queryset = Property.objects.filter(review__tenant__user=user)
+
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ['file']
