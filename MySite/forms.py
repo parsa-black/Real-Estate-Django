@@ -204,12 +204,14 @@ class ReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ['quality', 'location', 'price', 'neighborhood', 'transportation', 'comment','property']
+        fields = ['quality', 'location', 'price', 'neighborhood', 'transportation', 'comment', 'property']
 
     def __init__(self, user, *args, **kwargs):
         super(ReviewForm, self).__init__(*args, **kwargs)
         # Restrict property choices based on user
-        self.fields['property'].queryset = Property.objects.filter(review__tenant__user=user)
+        self.fields['property'].choices = [
+            (choice.pk, choice) for choice in Property.objects.all()
+        ]
 
 
 class DocumentForm(forms.ModelForm):
