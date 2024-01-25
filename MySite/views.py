@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
-from .models import Property, Review, Document
+from .models import Property, Review, Document, ProfileUser
 from .forms import LoginForm, UserForm, ProfileForm, PropertyForm, ReviewForm, DocumentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
@@ -14,7 +14,26 @@ from django.db.models import Q
 
 def homepage(request):
     properties = Property.objects.all()
-    return render(request, 'home.html',{'properties': properties})
+    owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
+    return render(request, 'home.html', {'properties': properties, 'phone': owner_phone[0][0]})
+
+
+def search_view(request):
+    query = request.GET.get('query')
+    msg = None
+    properties = None
+    owner_phone= None
+    if query:
+        properties = Property.objects.filter(title__icontains=query)
+        owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
+        context = {'properties': properties, 'query': query, 'msg': msg, 'phone': owner_phone[0][0]}
+        return render(request, 'home.html', context)
+    else:
+        msg = 'Not Found'
+
+    context = {'properties': properties, 'query': query, 'msg': msg}
+    return render(request, 'home.html', context)
+
 
 
 def logout_view(request):
@@ -108,7 +127,7 @@ def review_submit(request, property_id):
         try:
             Document.objects.get(property_id=property_id, uploader_id=request.user.profileuser.id, status='Accepted')
             Review.objects.get(property_id=property_id, tenant_id=request.user.profileuser.id)
-            sweetify.info(request, 'you alredy rate this house')
+            sweetify.info(request, 'you already rate this house')
             return redirect('home-page')
         except Review.DoesNotExist:
             if request.method == 'POST':
