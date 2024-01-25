@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attribute Display</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        section {
+            max-width: 600px;
+            width: 100%;
+            padding: 30px;
+            background: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #3498db;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        li strong {
+            color: #3498db;
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <h1>Attribute Display</h1>
+        <ul>
+            <li><strong>title:</strong> {{prop.title}}</li>
+            <li><strong>description:</strong>{{prop.description}}</li>
+            <li><strong>rent_price:</strong> {{prop.rent_price}}</li>
+            <li><strong>City:</strong> {{prop.house_city}}</li>
+            <li><strong>Address:</strong> {{prop.house_address}}</li>
+            <li><strong>Number of Bedrooms:</strong> {{prop.bedrooms}}</li>
+            <li><strong>Number of Bathrooms:</strong> {{prop.bathrooms}}</li>
+            <li><strong>Area:</strong> {{prop.area}}</li>
+            <li><strong>Yard Area:</strong> {{prop.yard_area}}</li>
+            <li><strong>Year of Buildment:</strong> {{prop.year}}</li>
+            <li><strong>dows it have garage:</strong> {{prop.garage}}</li>
+            <li><strong>Rate:</strong> {{prop.review}}</li>
+            <li><strong>Contact to Owner:</strong> {{prop.owner_number}}</li>
+        </ul>
+    </section>
+
+</body>
+</html>

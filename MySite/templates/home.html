@@ -237,6 +237,11 @@
                         </a>
                     </td>
                     <td>+98{{phone}}</td>
+                    <td>
+                        <a href="{% url 'property_page' property_id=item.id %}">
+                            <button class="upload-button">View</button>
+                        </a>
+                    </td>
                 </tr>
                 {% endfor %}
                 <!-- Add more rows as needed -->

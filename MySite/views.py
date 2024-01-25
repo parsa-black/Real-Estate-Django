@@ -4,6 +4,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.urls import reverse
+
+from MySite.dto import Dto
 from .models import Property, Review, Document, ProfileUser
 from .forms import LoginForm, UserForm, ProfileForm, PropertyForm, ReviewForm, DocumentForm
 from django.contrib.auth import authenticate, login, logout
@@ -34,11 +36,20 @@ def search_view(request):
     context = {'properties': properties, 'query': query, 'msg': msg}
     return render(request, 'home.html', context)
 
+def property_view(request, property_id):
+    prop = Property.objects.get(id=property_id)
+    owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
+    print(prop.house_review)
+    dto = Dto(prop.title, prop.description, prop.rent_price, prop.house_city, prop.house_address, prop.bedrooms, prop.bathrooms, prop.area, prop.yard_area, prop.year, prop.garage, prop.house_review, owner_phone[0][0])
+    dto.convertBooleanToString(dto)
+    return render(request, 'property.html', {'prop': dto})
 
 
 def logout_view(request):
     logout(request)
     return redirect('login-page')
+
+
 
 
 def list_house(request):
