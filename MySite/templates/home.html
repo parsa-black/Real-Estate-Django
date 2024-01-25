@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -159,7 +160,6 @@
         <a href="{% url 'register-property-page' %}">Home</a>
         <a href="#">Search</a>
         <a href="#">Profile</a>
-        <a href="{% url 'review-submit-page' %}">Review</a>
         <a href="{% url 'logout-page' %}">logout</a>
     </nav>
 
@@ -192,7 +192,9 @@
                             <i class="far fa-star"></i>
                         </div>
                         {{item.house_review}}
-                        <button class="upload-button">Rate</button>
+                        <a href="{% url 'review-page' property_id=item.id %}">
+                            <button class="upload-button">Rate</button>
+                        </a>
                     </td>
                     <td>
                         <a href="{% url 'upload-page' property_id=item.id %}">
@@ -210,6 +212,8 @@
     <footer>
         <p>&copy; 2023 Rent House. All Rights Reserved.</p>
     </footer>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
 </body>
 </html>
+{% load sweetify %}
+{% sweetify %}

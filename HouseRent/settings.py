@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MySite',
+    'sweetify'
 ]
 
 MIDDLEWARE = [
@@ -128,6 +129,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 
 # Static files (CSS, JavaScript, Images)

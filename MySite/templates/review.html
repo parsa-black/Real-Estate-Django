@@ -1,13 +1,12 @@
-<!-- review_form.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating and Comment Form</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             background-color: #f4f4f4;
             margin: 0;
             padding: 0;
@@ -22,80 +21,62 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
+            width: 80%;
+            max-width: 600px;
         }
 
         label {
             display: block;
             margin-bottom: 8px;
+            font-weight: bold;
         }
 
-        input[type="radio"] {
-            margin-right: 5px;
-        }
-
-        textarea {
+        input, textarea {
             width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
-            resize: none;
+            padding: 8px;
+            margin-bottom: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
         }
 
-        input[type="submit"] {
+        button {
             background-color: #4caf50;
             color: #fff;
-            padding: 10px;
+            padding: 10px 15px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            font-size: 16px;
         }
 
-        input[type="submit"]:hover {
+        button:hover {
             background-color: #45a049;
         }
     </style>
-    <title>Review Form</title>
 </head>
 <body>
-    <form method="post">
+
+    <form method="POST">
         {% csrf_token %}
-<div class="property-details">
-          <div class="input-box">
-            <span class="details">Quality</span>
-            {{review_form.quality}}
-          </div>
-          <div class="input-box">
-            <span class="details">Location</span>
-            {{review_form.location}}
-          </div>
-          <div class="input-box">
-            <span class="details">Rent Price</span>
-            {{review_form.price}}
-          </div>
-          <div class="input-box">
-            <span class="details">Neighborhood</span>
-            {{review_form.neighborhood}}
-          </div>
-          <div class="input-box">
-            <span class="details">Transportation</span>
-            {{review_form.transportation}}
-          </div>
-            <div class="input-box">
-                <span class="details">Comment</span>
-                {{review_form.comment}}
-            </div>
-            <div class="input-box">
-                <span class="details">File</span>
-                {{document_form.file}}
-            </div>
-            <div class="input-box">
-                <span class="details">Property</span>
-                {{document_form.property}}
-            </div>
-        </div>
-        <div class="button">
-          <input type="submit" value="Register">
-        </div>
+        <label for="rating1">Rate quality:</label>
+        {{form.quality}}
+        <label for="rating2">Rate location:</label>
+        {{form.location}}
+        <label for="rating3">Rate price:</label>
+        {{form.price}}
+        <label for="rating4">Rate landlord:</label>
+        {{form.landlord}}
+        <label for="rating5">Rate neighborhood:</label>
+        {{form.neighborhood}}
+        <label for="rating6">Rate transportation:</label>
+        {{form.transportation}}
+        <label for="comment5">Comment:</label>
+        {{form.comment}}
+        <button type="submit">Submit</button>
     </form>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
 </body>
 </html>
+{% load sweetify %}
+{% sweetify %}

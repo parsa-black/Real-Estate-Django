@@ -174,25 +174,41 @@ class PropertyForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
-    quality = forms.ChoiceField(
-        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
-        widget=forms.RadioSelect,
+    quality = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
     )
-    location = forms.ChoiceField(
-        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
-        widget=forms.RadioSelect
+    location = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
     )
-    price = forms.ChoiceField(
-        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
-        widget=forms.RadioSelect
+    price = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
     )
-    neighborhood = forms.ChoiceField(
-        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
-        widget=forms.RadioSelect
+    landlord = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
     )
-    transportation = forms.ChoiceField(
-        choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')],
-        widget=forms.RadioSelect
+    neighborhood = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
+    )
+    transportation = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
     )
     comment = forms.CharField(
         label='Comment',
@@ -204,14 +220,14 @@ class ReviewForm(forms.ModelForm):
 
     class Meta:
         model = Review
-        fields = ['quality', 'location', 'price', 'neighborhood', 'transportation', 'comment', 'property']
+        fields = ['quality', 'location', 'price', 'landlord', 'neighborhood', 'transportation', 'comment']
 
-    def __init__(self, user, *args, **kwargs):
-        super(ReviewForm, self).__init__(*args, **kwargs)
-        # Restrict property choices based on user
-        self.fields['property'].choices = [
-            (choice.pk, choice) for choice in Property.objects.all()
-        ]
+    # def __init__(self, user, *args, **kwargs):
+    #     super(ReviewForm, self).__init__(*args, **kwargs)
+    #     # Restrict property choices based on user
+    #     self.fields['property'].choices = [
+    #         (choice.pk, choice) for choice in Property.objects.all()
+    #     ]
 
 
 class DocumentForm(forms.ModelForm):

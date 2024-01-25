@@ -1,12 +1,14 @@
 # from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
-from .models import Property
+from django.urls import reverse
+from .models import Property, Review, Document
 from .forms import LoginForm, UserForm, ProfileForm, PropertyForm, ReviewForm, DocumentForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
-
+import sweetify
 
 def homepage(request):
     properties = Property.objects.all()
@@ -91,53 +93,90 @@ def property_register(request):
         })
     else:
         return render(request, 'access_denied.html', {})
-
+    
 
 @login_required()
-def review_submit(request):
+def review_submit(request, property_id):
     if request.user.profileuser.role == 'T':
-        if request.method == 'POST':
-            review_form = ReviewForm(request.POST)
-            document_form = DocumentForm(request.user, request.POST, request.FILES)
+        try:
+            Document.objects.get(property_id=property_id, uploader_id=request.user.profileuser.id, status=True)
+            Review.objects.get(property_id=property_id, tenant_id=request.user.profileuser.id)
+            sweetify.info(request, 'you alredy rate this house')
+            return redirect('home-page')
+        except Review.DoesNotExist:
+            if request.method == 'POST':
+                review_form = ReviewForm(request.POST)
+                if review_form.is_valid():
+                    #Save the review
+                    prop = Property.objects.get(id=property_id)
+                    review = review_form.save(commit=False)
+                    review.tenant = request.user.profileuser
+                    review.property = prop
+                    review.save()
+                    sweetify.success(request, 'Your review have been Submited')
+                    return redirect('home-page')  # Redirect to a success page or another view
+            else:
+                review_form = ReviewForm()
 
-            if review_form.is_valid() and document_form.is_valid():
-                # Save the review
-                review = review_form.save(commit=False)
-                review.tenant = request.user.profileuser
-                review.save()
+            return render(request, 'review.html', {'form': review_form})
+        except Document.DoesNotExist:
+            
+            sweetify.error(request, 'You should upload your document')
+            return redirect('home-page')  # Return an HttpResponse with an appropriate status code
 
-                # Save the document
-                document = document_form.save(commit=False)
-                review.property = document.property
-                document.uploader = request.user.profileuser
-                document.save()
-
-                return redirect('home-page')  # Redirect to a success page or another view
-
-        else:
-            review_form = ReviewForm(request.user)
-            document_form = DocumentForm()
-
-        return render(request, 'review.html', {'review_form': review_form, 'document_form': document_form})
     else:
         return render(request, 'access_denied.html', {})
+    
+
+# @login_required()
+# def review_submit(request,):
+#     if request.user.profileuser.role == 'T':
+#         if request.method == 'POST':
+#             review_form = ReviewForm(request.POST)
+#             document_form = DocumentForm(request.user, request.POST, request.FILES)
+
+#             if review_form.is_valid() and document_form.is_valid():
+#                 # Save the review
+#                 review = review_form.save(commit=False)
+#                 review.tenant = request.user.profileuser
+#                 review.save()
+
+#                 # Save the document
+#                 document = document_form.save(commit=False)
+#                 review.property = document.property
+#                 document.uploader = request.user.profileuser
+#                 document.save()
+
+#                 return redirect('home-page')  # Redirect to a success page or another view
+
+#         else:
+#             review_form = ReviewForm(request.user)
+
+#         return render(request, 'review.html', {'form': review_form})
+#     else:
+#         return render(request, 'access_denied.html', {})
     
 @login_required()
 def upload_view(request, property_id):
     form = DocumentForm(request.POST or None, request.FILES or None)
-    print(request.FILES)
-    if request.method == 'POST':
-        form = DocumentForm(request.POST, request.FILES)
-        if form.is_valid():
-            property_instance = Property.objects.get(id=property_id)
-            upload = form.save(commit=False)
-            upload.file = request.FILES['file']
-            upload.property = property_instance
-            upload.uploader = request.user.profileuser
-            upload.save()
+    try:
+        Document.objects.get(property_id=property_id, uploader_id=request.user.profileuser.id)
+        sweetify.info(request, 'you uploaded your doc, wait untill accepted')
+        return redirect('home-page')
+    except Document.DoesNotExist:
+        if request.method == 'POST':
+            form = DocumentForm(request.POST, request.FILES)
+            if form.is_valid():
+                property_instance = Property.objects.get(id=property_id)
+                upload = form.save(commit=False)
+                upload.file = request.FILES['file']
+                upload.property = property_instance
+                upload.uploader = request.user.profileuser
+                upload.save()
+                sweetify.error(request, 'You should upload your document')
+            else:
+                form = DocumentForm()
+            return render(request, 'upload.html', {'form': form, 'msg': 'credentials incorrect'})
         else:
-            form = DocumentForm()
-        return render(request, 'upload.html', {'form': form, 'msg': 'credentials incorrect'})
-    else:
-        return render(request, 'upload.html', {'form': form})
+            return render(request, 'upload.html', {'form': form})
         
