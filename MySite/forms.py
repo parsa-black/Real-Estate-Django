@@ -215,6 +215,9 @@ class ReviewForm(forms.ModelForm):
 
 
 class DocumentForm(forms.ModelForm):
+    file = forms.FileField()
     class Meta:
         model = Document
         fields = ['file']
+        widgets = {'upload': forms.FileInput(attrs={'required': True})}
+

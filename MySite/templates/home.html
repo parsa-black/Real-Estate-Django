@@ -99,6 +99,41 @@
             margin: 0;
             color: #fff;
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            color: #333;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #3498db;
+            color: #fff;
+        }
+
+        .rating-buttons {
+            display: flex;
+            gap: 5px;
+        }
+
+        .upload-button {
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .upload-button:hover {
+            background-color: #27ae60;
+        }
 
         /* Responsive styles */
         @media screen and (max-width: 768px) {
@@ -130,7 +165,45 @@
 
     <!-- Content Section -->
     <section>
-        <!-- Your content goes here -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Property Name</th>
+                    <th>Location</th>
+                    <th>Price</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in properties %}
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.title}}</td>
+                    <td>{{item.house_city}}</td>
+                    <td>{{item.rent_price}}</td>
+                    <td>
+                        <div class="rating-buttons">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                        {{item.house_review}}
+                        <button class="upload-button">Rate</button>
+                    </td>
+                    <td>
+                        <a href="{% url 'upload-page' property_id=item.id %}">
+                            <button class="upload-button">Upload</button>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
     </section>
 
     <!-- Footer -->

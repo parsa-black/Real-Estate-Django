@@ -9,7 +9,8 @@ from django.contrib.auth.hashers import make_password
 
 
 def homepage(request):
-    return render(request, 'home.html')
+    properties = Property.objects.all()
+    return render(request, 'home.html',{'properties': properties})
 
 
 def logout_view(request):
@@ -120,3 +121,23 @@ def review_submit(request):
         return render(request, 'review.html', {'review_form': review_form, 'document_form': document_form})
     else:
         return render(request, 'access_denied.html', {})
+    
+@login_required()
+def upload_view(request, property_id):
+    form = DocumentForm(request.POST or None, request.FILES or None)
+    print(request.FILES)
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            property_instance = Property.objects.get(id=property_id)
+            upload = form.save(commit=False)
+            upload.file = request.FILES['file']
+            upload.property = property_instance
+            upload.uploader = request.user.profileuser
+            upload.save()
+        else:
+            form = DocumentForm()
+        return render(request, 'upload.html', {'form': form, 'msg': 'credentials incorrect'})
+    else:
+        return render(request, 'upload.html', {'form': form})
+        
