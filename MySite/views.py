@@ -9,6 +9,8 @@ from .forms import LoginForm, UserForm, ProfileForm, PropertyForm, ReviewForm, D
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 import sweetify
+from django.db.models import Q
+
 
 def homepage(request):
     properties = Property.objects.all()
@@ -30,24 +32,29 @@ def list_house(request):
 
 
 def register(request):
+    msg = None
     if request.method == 'POST':
         user_form = UserForm(request.POST)
         profile_form = ProfileForm(request.POST)
         if user_form.is_valid():
-            user = user_form.save(commit=False)
-            hashed_password = make_password(user_form.cleaned_data['password'])  # Create a user object but don't save
-            user.password = hashed_password
-            user.save()
-            profile = profile_form.save(commit=False)
-            profile.user = user  # Associate the profile with the user
-            profile.save()
-            return redirect('home-page')
+            if user_form.cleaned_data.get('password') ==user_form.cleaned_data.get('confirm_password'):
+                user = user_form.save(commit=False)
+                hashed_password = make_password(user_form.cleaned_data['password'])  # Create a user object but don't save
+                user.password = hashed_password
+                user.save()
+                profile = profile_form.save(commit=False)
+                profile.user = user  # Associate the profile with the user
+                profile.save()
+                return redirect('home-page')
+            else:
+                msg = 'Password sould be equal to password confirm'
     else:
         user_form = UserForm()
         profile_form = ProfileForm()
     return render(request, 'register.html', {
         'user_form': user_form,
         'profile_form': profile_form,
+        'msg': msg
     })
 
 
@@ -99,7 +106,7 @@ def property_register(request):
 def review_submit(request, property_id):
     if request.user.profileuser.role == 'T':
         try:
-            Document.objects.get(property_id=property_id, uploader_id=request.user.profileuser.id, status=True)
+            Document.objects.get(property_id=property_id, uploader_id=request.user.profileuser.id, status='Accepted')
             Review.objects.get(property_id=property_id, tenant_id=request.user.profileuser.id)
             sweetify.info(request, 'you alredy rate this house')
             return redirect('home-page')
@@ -107,21 +114,20 @@ def review_submit(request, property_id):
             if request.method == 'POST':
                 review_form = ReviewForm(request.POST)
                 if review_form.is_valid():
-                    #Save the review
                     prop = Property.objects.get(id=property_id)
                     review = review_form.save(commit=False)
                     review.tenant = request.user.profileuser
                     review.property = prop
                     review.save()
                     sweetify.success(request, 'Your review have been Submited')
-                    return redirect('home-page')  # Redirect to a success page or another view
+                    return redirect('home-page')
             else:
                 review_form = ReviewForm()
 
             return render(request, 'review.html', {'form': review_form})
         except Document.DoesNotExist:
             
-            sweetify.error(request, 'You should upload your document')
+            sweetify.error(request, 'first Your doc should be accepted by admin')
             return redirect('home-page')  # Return an HttpResponse with an appropriate status code
 
     else:
@@ -160,8 +166,10 @@ def review_submit(request, property_id):
 def upload_view(request, property_id):
     form = DocumentForm(request.POST or None, request.FILES or None)
     try:
-        Document.objects.get(property_id=property_id, uploader_id=request.user.profileuser.id)
-        sweetify.info(request, 'you uploaded your doc, wait untill accepted')
+        Document.objects.get(Q(property_id=property_id) &
+    Q(uploader_id=request.user.profileuser.id) &
+    (Q(status='Pending') | Q(status='Accepted')))
+        sweetify.info(request, 'you uploaded your doc')
         return redirect('home-page')
     except Document.DoesNotExist:
         if request.method == 'POST':
@@ -173,7 +181,8 @@ def upload_view(request, property_id):
                 upload.property = property_instance
                 upload.uploader = request.user.profileuser
                 upload.save()
-                sweetify.error(request, 'You should upload your document')
+                sweetify.success(request, 'Your doc have been uploaded. wait for admin to accept it')
+                return redirect('home-page')
             else:
                 form = DocumentForm()
             return render(request, 'upload.html', {'form': form, 'msg': 'credentials incorrect'})

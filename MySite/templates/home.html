@@ -157,7 +157,8 @@
 
     <!-- Navbar -->
     <nav>
-        <a href="{% url 'register-property-page' %}">Home</a>
+        <a href="{% url 'home-page' %}">Home</a>
+        <a href="{% url 'register-property-page' %}">Property</a>
         <a href="#">Search</a>
         <a href="#">Profile</a>
         <a href="{% url 'logout-page' %}">logout</a>
@@ -173,7 +174,7 @@
                     <th>Location</th>
                     <th>Price</th>
                     <th>Rating</th>
-                    <th>Actions</th>
+                    <th>Upload</th>
                 </tr>
             </thead>
             <tbody>

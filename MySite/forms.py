@@ -52,9 +52,17 @@ class UserForm(forms.ModelForm):
                         'max_length': 'Email Max Length Must Be 255 Characters'}
     )
 
+    confirm_password = password = forms.CharField(
+        label='Password',
+        max_length=30,
+        widget=forms.TextInput(attrs={'placeholder': 'Password'}),
+        error_messages={'required': 'Please Enter Your Password',
+                        'max_length': 'Password Max Length Must Be 30 Characters'}
+    )
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email']
+        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email', 'confirm_password']
 
 
 class ProfileForm(forms.ModelForm):

@@ -93,7 +93,13 @@ class Document(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     uploader = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     file = models.FileField(upload_to='documents/')
-    status = models.BooleanField(default=False)
+    STATUS_CHOICES = [
+        ('Rejected', 'Rejected'),
+        ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
+    ]
+    status = models.CharField(
+        max_length=10, choices=STATUS_CHOICES, default='Pending')
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
