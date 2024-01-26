@@ -15,20 +15,19 @@ from django.db.models import Q
 
 
 def homepage(request):
-    properties = Property.objects.all()
-    owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
-    return render(request, 'home.html', {'properties': properties, 'phone': owner_phone[0][0]})
+    properties = Property.objects.select_related('house_owner').all()
+    # owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
+    return render(request, 'home.html', {'properties': properties})
 
 
 def search_view(request):
     query = request.GET.get('query')
     msg = None
     properties = None
-    owner_phone= None
     if query:
-        properties = Property.objects.filter(title__icontains=query)
-        owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
-        context = {'properties': properties, 'query': query, 'msg': msg, 'phone': owner_phone[0][0]}
+        properties = Property.objects.select_related('house_owner').filter(title__icontains=query)
+        # owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
+        context = {'properties': properties, 'query': query, 'msg': msg}
         return render(request, 'home.html', context)
     else:
         msg = 'Not Found'
@@ -37,10 +36,9 @@ def search_view(request):
     return render(request, 'home.html', context)
 
 def property_view(request, property_id):
-    prop = Property.objects.get(id=property_id)
-    owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
-    print(prop.house_review)
-    dto = Dto(prop.title, prop.description, prop.rent_price, prop.house_city, prop.house_address, prop.bedrooms, prop.bathrooms, prop.area, prop.yard_area, prop.year, prop.garage, prop.house_review, owner_phone[0][0])
+    prop = Property.objects.select_related('house_owner').get(id=property_id)
+    # owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
+    dto = Dto(prop.title, prop.description, prop.rent_price, prop.house_city, prop.house_address, prop.bedrooms, prop.bathrooms, prop.area, prop.yard_area, prop.year, prop.garage, prop.house_review, prop.house_owner.phone_number)
     dto.convertBooleanToString(dto)
     return render(request, 'property.html', {'prop': dto})
 
