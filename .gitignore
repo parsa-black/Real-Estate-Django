@@ -5,3 +5,4 @@ MySite/migrations/__pycache__/
 venv
 docker-compose.yml
 HouseRent/__pycache__/
+documents/
