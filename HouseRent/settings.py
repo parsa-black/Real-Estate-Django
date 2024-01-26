@@ -26,6 +26,8 @@ SECRET_KEY = 'django-insecure-7i4pg7wn1ca@@l*pab-q0FXRuby%&pg)7)x^@8v*c1ac4das%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+LOGIN_URL = '/mysite/login/'
+
 ALLOWED_HOSTS = []
 
 
@@ -39,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'MySite',
+    'sweetify'
 ]
 
 MIDDLEWARE = [
@@ -128,6 +131,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+SWEETIFY_SWEETALERT_LIBRARY = 'sweetalert2'
 
 
 # Static files (CSS, JavaScript, Images)

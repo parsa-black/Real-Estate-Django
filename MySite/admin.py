@@ -43,7 +43,7 @@ class PropertyAdmin(admin.ModelAdmin):
 @admin.register(models.Review)
 class ReviewAdmin(admin.ModelAdmin):
     autocomplete_fields = ['property', 'tenant']
-    readonly_fields = ['Time']
+    readonly_fields = ['time']
     list_display = ['property', 'tenant', 'rating']
     list_per_page = 10
     list_select_related = ['property', 'tenant']

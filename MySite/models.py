@@ -59,7 +59,7 @@ class Property(models.Model):
     description = models.TextField(max_length=400)
     rent_price = models.DecimalField(max_digits=10, decimal_places=2)
     house_city = models.CharField(max_length=30)
-    house_address = models.CharField(max_length=255, blank=True, null=True)
+    house_address = models.CharField(max_length=255)
     bedrooms = models.PositiveIntegerField()
     bathrooms = models.PositiveIntegerField()
     area = models.PositiveIntegerField()
@@ -93,7 +93,13 @@ class Document(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     uploader = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
     file = models.FileField(upload_to='documents/')
-    status = models.BooleanField(default=False)
+    STATUS_CHOICES = [
+        ('Rejected', 'Rejected'),
+        ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
+    ]
+    status = models.CharField(
+        max_length=10, choices=STATUS_CHOICES, default='Pending')
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -106,21 +112,21 @@ class Document(models.Model):
 class Review(models.Model):
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     tenant = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
-    quality = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
-    location = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
-    price = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
-    landlord = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
-    neighborhood = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
-    Transportation = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(5)])
-    rating = models.FloatField(default=0, editable=False)
+    quality = models.PositiveIntegerField(default=1, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    location = models.PositiveIntegerField(default=1, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    price = models.PositiveIntegerField(default=1, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    landlord = models.PositiveIntegerField(default=1, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    neighborhood = models.PositiveIntegerField(default=1, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    transportation = models.PositiveIntegerField(default=1, choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')])
+    rating = models.FloatField(default=1, editable=False)
     comment = models.TextField()
-    Time = models.DateTimeField(auto_now_add=True)
+    time = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         # Calculate the average rating
         criteria_count = 6  # Number of criteria for evaluation
         total_rating = self.quality + self.location + self.price + self.landlord + self.neighborhood \
-                                    + self.Transportation
+                                    + self.transportation
         self.rating = round(total_rating / criteria_count, 2)
 
         super().save(*args, **kwargs)

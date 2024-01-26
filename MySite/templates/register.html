@@ -8,6 +8,15 @@
    </head>
 <body>
   <div class="container">
+    {% for field, errors in user_form.errors.items %}
+    {% for error in errors %} 
+    <li style="color: red;"">{{ error }}</li>
+    {% endfor %}
+    {% endfor %}
+    {% if msg %}
+    <li style="color: red;"">{{ msg }}</li>
+    {% endif %}
+
     <div class="title">Registration</div>
     <div class="content">
       <form method= POST>
@@ -43,7 +52,7 @@
           </div>
           <div class="input-box">
             <span class="details">Confirm Password</span>
-            <!-- <input type="text" placeholder="Confirm your password" required> -->
+            {{user_form.confirm_password}}
           </div>
         </div>
         <div class="button">
