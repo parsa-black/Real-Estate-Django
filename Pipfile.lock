@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "70de8482ed9149883c206394837511c6d3851185313344759473595026e466bc"
+            "sha256": "749648e77ea0fb3a3dd305a6923e2359803f121c06237cc5cec1f37664829999"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -61,12 +61,12 @@
         },
         "django": {
             "hashes": [
-                "sha256:3a9fd52b8dbeae335ddf4a9dfa6c6a0853a1122f1fb071a8d5eca979f73a05c8",
-                "sha256:7d29e14dfbc19cb6a95a4bd669edbde11f5d4c6a71fdaa42c2d40b6846e807f7"
+                "sha256:8c8659665bc6e3a44fefe1ab0a291e5a3fb3979f9a8230be29de975e57e8f854",
+                "sha256:f47a37a90b9bbe2c8ec360235192c7fddfdc832206fcf618bb849b39256affc1"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.10'",
-            "version": "==5.0"
+            "version": "==5.0.1"
         },
         "mysqlclient": {
             "hashes": [
@@ -92,6 +92,15 @@
             "markers": "python_version >= '3.5'",
             "version": "==0.4.4"
         },
+        "sweetify": {
+            "hashes": [
+                "sha256:37100d8f02929076cd060b1c1aae7575448af32e61ca8c03bc003548e31ffc70",
+                "sha256:941ed8914467d5a29eb263079fd4f39661df81bfded6476ed4ef2ad57a4c25ba"
+            ],
+            "index": "pypi",
+            "markers": "python_full_version >= '3.6.2' and python_full_version < '4.0.0'",
+            "version": "==2.3.1"
+        },
         "typing-extensions": {
             "hashes": [
                 "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783",
@@ -102,11 +111,11 @@
         },
         "tzdata": {
             "hashes": [
-                "sha256:11ef1e08e54acb0d4f95bdb1be05da659673de4acbd21bf9c69e94cc5e907a3a",
-                "sha256:7e65763eef3120314099b6939b5546db7adce1e7d6f2e179e3df563c70511eda"
+                "sha256:aa3ace4329eeacda5b7beb7ea08ece826c28d761cda36e747cfbf97996d39bf3",
+                "sha256:dd54c94f294765522c77399649b4fefd95522479a664a0cec87f41bebc6148c9"
             ],
             "markers": "sys_platform == 'win32'",
-            "version": "==2023.3"
+            "version": "==2023.4"
         }
     },
     "develop": {}

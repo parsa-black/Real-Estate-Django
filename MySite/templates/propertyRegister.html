@@ -1,10 +1,69 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" dir="ltr">
+  <head>
     <meta charset="UTF-8">
-    <title>Registering</title>
-</head>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
 <body>
-    <h1>Test</h1>
+  <div class="container">
+    <div class="title">Registration</div>
+    <div class="content">
+      <form method= POST>
+        {% csrf_token %}
+        <div class="property-details">
+          <div class="input-box">
+            <span class="details">Title</span>
+            {{property_form.title}}
+          </div>
+          <div class="input-box">
+            <span class="details">Description</span>
+            {{property_form.description}}
+          </div>
+          <div class="input-box">
+            <span class="details">Rent Price</span>
+            {{property_form.rent_price}}
+          </div>
+          <div class="input-box">
+            <span class="details">City</span>
+            {{property_form.house_city}}
+          </div>
+          <div class="input-box">
+            <span class="details">Address</span>
+            {{property_form.house_address}}
+          </div>
+            <div class="input-box">
+                <span class="details">Bedrooms</span>
+                {{property_form.bedrooms}}
+            </div>
+            <div class="input-box">
+                <span class="details">Bathrooms</span>
+                {{property_form.bathrooms}}
+            </div>
+            <div class="input-box">
+                <span class="details">Area</span>
+                {{property_form.area}}
+            </div>
+            <div class="input-box">
+                <span class="details">yard</span>
+                {{property_form.yard_area}}
+            </div>
+            <div class="input-box">
+                <span class="details">Year</span>
+                {{property_form.year}}
+            </div>
+            <div class="input-box">
+                <span class="details">Garage</span>
+                {{property_form.garage}}
+            </div>
+        </div>
+        <div class="button">
+          <input type="submit" value="Register">
+        </div>
+      </form>
+    </div>
+  </div>
+
 </body>
 </html>

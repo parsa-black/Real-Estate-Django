@@ -1,5 +1,5 @@
 from django import forms
-from .models import User, ProfileUser, Property
+from .models import User, ProfileUser, Property, Review, Document
 
 
 class UserForm(forms.ModelForm):
@@ -52,9 +52,17 @@ class UserForm(forms.ModelForm):
                         'max_length': 'Email Max Length Must Be 255 Characters'}
     )
 
+    confirm_password = password = forms.CharField(
+        label='Password',
+        max_length=30,
+        widget=forms.TextInput(attrs={'placeholder': 'Password'}),
+        error_messages={'required': 'Please Enter Your Password',
+                        'max_length': 'Password Max Length Must Be 30 Characters'}
+    )
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email']
+        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email', 'confirm_password']
 
 
 class ProfileForm(forms.ModelForm):
@@ -107,7 +115,11 @@ class PropertyForm(forms.ModelForm):
         label='Rent Price',
         max_digits=10,
         decimal_places=2,
-        error_messages={'required': 'Please Property Must Have Rent Price'}
+        min_value=0,
+        max_value=9999999,
+        error_messages={'required': 'Please Property Must Have Rent Price',
+                        'min_value': 'Please Price can not be less than Zero',
+                        'max_value': 'Please Price can not be More than 10 digits'}
     )
     house_city = forms.CharField(
         label='House City',
@@ -120,7 +132,8 @@ class PropertyForm(forms.ModelForm):
         label='House Address',
         max_length=255,
         widget=forms.TextInput(attrs={'placeholder': 'Address'}),
-        error_messages={'max_length': 'Max Length Must Be 255'}
+        error_messages={'required': 'Please Enter Address',
+                        'max_length': 'Max Length Must Be 255'}
     )
     bedrooms = forms.IntegerField(
         min_value=0,
@@ -138,14 +151,18 @@ class PropertyForm(forms.ModelForm):
     )
     area = forms.IntegerField(
         min_value=0,
+        max_value=99999,
         error_messages={'required': 'Property Must Have Area',
-                        'max_value': 'Size Must Be Positive'}
+                        'min_value': 'Size Must Be Positive',
+                        'max_value': 'Size is too High'}
     )
     yard_area = forms.IntegerField(
         min_value=0,
+        max_value=99999,
         initial=0,
         required=False,
-        error_messages={'min_value': 'Size Must Be Positive'}
+        error_messages={'min_value': 'Size Must Be Positive',
+                        'max_value': 'Size is too High'}
     )
     year = forms.IntegerField(
         min_value=1900,
@@ -162,3 +179,69 @@ class PropertyForm(forms.ModelForm):
         model = Property
         fields = ['title', 'description', 'rent_price', 'house_city', 'house_address', 'bedrooms', 'bathrooms',
                   'area', 'yard_area', 'year', 'garage']
+
+
+class ReviewForm(forms.ModelForm):
+    quality = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
+    )
+    location = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
+    )
+    price = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
+    )
+    landlord = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
+    )
+    neighborhood = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
+    )
+    transportation = forms.IntegerField(
+        widget=forms.NumberInput(attrs={'type': 'range', 'min': '1', 'max': '5', 'value': '3'}),
+        min_value=1,
+        max_value=5,
+        initial=3,
+    )
+    comment = forms.CharField(
+        label='Comment',
+        max_length=400,
+        widget=forms.Textarea(attrs={'placeholder': 'Comment'}),
+        error_messages={'required': 'Please provide your Comment',
+                        'max_length': 'Description Must Be Under 400 Characters'}
+    )
+
+    class Meta:
+        model = Review
+        fields = ['quality', 'location', 'price', 'landlord', 'neighborhood', 'transportation', 'comment']
+
+    # def __init__(self, user, *args, **kwargs):
+    #     super(ReviewForm, self).__init__(*args, **kwargs)
+    #     # Restrict property choices based on user
+    #     self.fields['property'].choices = [
+    #         (choice.pk, choice) for choice in Property.objects.all()
+    #     ]
+
+
+class DocumentForm(forms.ModelForm):
+    file = forms.FileField()
+    class Meta:
+        model = Document
+        fields = ['file']
+        widgets = {'upload': forms.FileInput(attrs={'required': True})}
+

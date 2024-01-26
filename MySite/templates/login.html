@@ -18,6 +18,9 @@
             <div class="text">
                Login Form
             </div>
+            {% if msg %}
+            <li style="color: red;"">{{ msg }}</li>
+            {% endif %}
             <form method= POST>
                {% csrf_token %}
                <div class="data">
