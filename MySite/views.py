@@ -35,6 +35,7 @@ def search_view(request):
     context = {'properties': properties, 'query': query, 'msg': msg}
     return render(request, 'home.html', context)
 
+
 def property_view(request, property_id):
     prop = Property.objects.select_related('house_owner').get(id=property_id)
     # owner_phone = ProfileUser.objects.filter(id=request.user.profileuser.id).values_list('phone_number')
@@ -46,8 +47,6 @@ def property_view(request, property_id):
 def logout_view(request):
     logout(request)
     return redirect('login-page')
-
-
 
 
 def list_house(request):
@@ -162,34 +161,6 @@ def review_submit(request, property_id):
         return render(request, 'access_denied.html', {})
     
 
-# @login_required()
-# def review_submit(request,):
-#     if request.user.profileuser.role == 'T':
-#         if request.method == 'POST':
-#             review_form = ReviewForm(request.POST)
-#             document_form = DocumentForm(request.user, request.POST, request.FILES)
-
-#             if review_form.is_valid() and document_form.is_valid():
-#                 # Save the review
-#                 review = review_form.save(commit=False)
-#                 review.tenant = request.user.profileuser
-#                 review.save()
-
-#                 # Save the document
-#                 document = document_form.save(commit=False)
-#                 review.property = document.property
-#                 document.uploader = request.user.profileuser
-#                 document.save()
-
-#                 return redirect('home-page')  # Redirect to a success page or another view
-
-#         else:
-#             review_form = ReviewForm(request.user)
-
-#         return render(request, 'review.html', {'form': review_form})
-#     else:
-#         return render(request, 'access_denied.html', {})
-    
 @login_required()
 def upload_view(request, property_id):
     form = DocumentForm(request.POST or None, request.FILES or None)
@@ -216,4 +187,3 @@ def upload_view(request, property_id):
             return render(request, 'upload.html', {'form': form, 'msg': 'credentials incorrect'})
         else:
             return render(request, 'upload.html', {'form': form})
-        
