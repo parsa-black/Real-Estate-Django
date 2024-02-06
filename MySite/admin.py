@@ -6,7 +6,7 @@ from . import models
 
 @admin.register(models.ProfileUser)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'role', 'property_count']
+    list_display = ['username', 'role', 'property_count', 'phone_number']
     list_editable = ['role']
     list_per_page = 10
     search_fields = ['username']
