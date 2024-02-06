@@ -37,19 +37,6 @@ class UserForm(forms.ModelForm):
         error_messages={'required': 'Please Enter Your Password',
                         'max_length': 'Password Max Length Must Be 30 Characters'}
     )
-    birth_date = forms.DateField(
-        label='Birth Date',
-        widget=forms.DateInput(attrs={'placeholder': 'BirthDate', 'type': 'date'})
-    )
-    phone_number = forms.CharField(
-        label='Phone Number',
-        max_length=10,
-        min_length=10,
-        widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}),
-        error_messages={'required': 'Please Enter Your Phone Number',
-                        'max_length': 'Phone Number must be 10 Characters',
-                        'min_length': 'Phone Number must be 10 Characters'}
-    )
     email = forms.EmailField(
         label='Email',
         max_length=255,
@@ -66,21 +53,34 @@ class UserForm(forms.ModelForm):
                         'max_length': 'Password Max Length Must Be 30 Characters'}
     )
 
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'password', 'email',
+                  'confirm_password']
+
+
+class ProfileForm(forms.ModelForm):
+    birth_date = forms.DateField(
+        label='Birth Date',
+        widget=forms.DateInput(attrs={'placeholder': 'BirthDate', 'type': 'date'})
+    )
+    phone_number = forms.CharField(
+        label='Phone Number',
+        max_length=10,
+        min_length=10,
+        widget=forms.TextInput(attrs={'placeholder': 'Phone Number'}),
+        error_messages={'required': 'Please Enter Your Phone Number',
+                        'max_length': 'Phone Number must be 10 Characters',
+                        'min_length': 'Phone Number must be 10 Characters'}
+    )
     requestRole = forms.ChoiceField(
         label='RequestRole',
         choices=ROLE_CHOICES,
     )
-
-    class Meta:
-        model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email',
-                  'confirm_password', 'requestRole']
-
-
-class ProfileForm(forms.ModelForm):
     class Meta:
         model = ProfileUser
-        fields = ['birth_date', 'phone_number']  # Add other fields as needed
+        fields = ['birth_date', 'phone_number', 'requestRole']
 
 
 class LoginForm(forms.Form):
