@@ -230,18 +230,11 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = ['quality', 'location', 'price', 'landlord', 'neighborhood', 'transportation', 'comment']
 
-    # def __init__(self, user, *args, **kwargs):
-    #     super(ReviewForm, self).__init__(*args, **kwargs)
-    #     # Restrict property choices based on user
-    #     self.fields['property'].choices = [
-    #         (choice.pk, choice) for choice in Property.objects.all()
-    #     ]
-
 
 class DocumentForm(forms.ModelForm):
     file = forms.FileField()
+
     class Meta:
         model = Document
         fields = ['file']
         widgets = {'upload': forms.FileInput(attrs={'required': True})}
-
