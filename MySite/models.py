@@ -103,7 +103,7 @@ class Document(models.Model):
     time = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.property} - {self.uploader.username}"
+        return f"{self.property.title} - {self.uploader.username}"
 
     class Meta:
         ordering = ['status']
