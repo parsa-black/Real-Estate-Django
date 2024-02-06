@@ -2,65 +2,145 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+<head>
     <meta charset="UTF-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .details {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        .error-msg {
+            color: red;
+            margin-top: 10px;
+        }
+    </style>
+</head>
 <body>
-  <div class="container">
-    {% for field, errors in user_form.errors.items %}
-    {% for error in errors %} 
-    <li style="color: red;"">{{ error }}</li>
-    {% endfor %}
-    {% endfor %}
+<div class="container">
+    {% if user_form.errors %}
+        <div class="error-msg">
+            {% for field, errors in user_form.errors.items %}
+                {% for error in errors %}
+                    {{ error }}<br>
+                {% endfor %}
+            {% endfor %}
+        </div>
+    {% endif %}
+
     {% if msg %}
-    <li style="color: red;"">{{ msg }}</li>
+        <div class="error-msg">{{ msg }}</div>
     {% endif %}
 
     <div class="title">Registration</div>
     <div class="content">
-      <form method= POST>
-        {% csrf_token %}
-        <div class="user-details">
-          <div class="input-box">
-            <span class="details">First Name</span>
-            {{user_form.first_name}}
-          </div>
-          <div class="input-box">
-            <span class="details">Last Name</span>
-            {{user_form.last_name}}
-          </div>
-          <div class="input-box">
-            <span class="details">Username</span>
-            {{user_form.username}}
-          </div>
-          <div class="input-box">
-            <span class="details">Password</span>
-            {{user_form.password}}
-          </div>
-          <div class="input-box">
-            <span class="details">Email</span>
-            {{user_form.email}}
-          </div>
-          <div class="input-box">
-            <span class="details">Phone Number</span>
-            {{user_form.phone_number}}
-          </div>
-          <div class="input-box">
-            <span class="details">Birth Date</span>
-            {{user_form.birth_date}}
-          </div>
-          <div class="input-box">
-            <span class="details">Confirm Password</span>
-            {{user_form.confirm_password}}
-          </div>
-        </div>
-        <div class="button">
-          <input type="submit" value="Register">
-        </div>
-      </form>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="user-details">
+                <div class="input-box">
+                    <span class="details">First Name</span>
+                    {{user_form.first_name}}
+                </div>
+                <div class="input-box">
+                    <span class="details">Last Name</span>
+                    {{user_form.last_name}}
+                </div>
+                <div class="input-box">
+                    <span class="details">Username</span>
+                    {{user_form.username}}
+                </div>
+                <div class="input-box">
+                    <span class="details">Password</span>
+                    {{user_form.password}}
+                </div>
+                <div class="input-box">
+                    <span class="details">Email</span>
+                    {{user_form.email}}
+                </div>
+                <div class="input-box">
+                    <span class="details">Phone Number</span>
+                    {{user_form.phone_number}}
+                </div>
+                <div class="input-box">
+                    <span class="details">Birth Date</span>
+                    {{user_form.birth_date}}
+                </div>
+                <div class="input-box">
+                    <span class="details">Confirm Password</span>
+                    {{user_form.confirm_password}}
+                </div>
+            </div>
+            <div class="button">
+                <input type="submit" value="Register">
+            </div>
+        </form>
     </div>
-  </div>
-
+</div>
 </body>
 </html>
