@@ -45,15 +45,6 @@ def logout_view(request):
     return redirect('login-page')
 
 
-def list_house(request):
-    try:
-        houses = Property.objects.all()
-        context = {'data_list': houses}
-        return render(request, 'list.html', context)
-    except ObjectDoesNotExist:
-        pass
-
-
 def register(request):
     msg = None
     if request.method == 'POST':
