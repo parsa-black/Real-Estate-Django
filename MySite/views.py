@@ -12,7 +12,7 @@ from django.db.models import Q
 
 
 def homepage(request):
-    properties = Property.objects.select_related('house_owner').all()
+    properties = Property.objects.select_related('house_owner').filter(is_available=True, is_submit= True)
     return render(request, 'home.html', {'properties': properties})
 
 
@@ -60,7 +60,7 @@ def register(request):
                 profile = profile_form.save(commit=False)
                 profile.user = user  # Associate the profile with the user
                 profile.save()
-                return redirect('home-page')
+                return redirect('login-page')
             else:
                 msg = 'Password should be equal to password confirm'
     else:
@@ -114,7 +114,9 @@ def property_register(request):
             'property_form': property_form
         })
     else:
-        return render(request, 'access_denied.html', {})
+        sweetify.error(request, 'Access Denied')
+        return redirect('home-page')
+
 
 
 @login_required()
@@ -146,8 +148,8 @@ def review_submit(request, property_id):
             return redirect('home-page')  # Return an HttpResponse with an appropriate status code
 
     else:
-        return render(request, 'access_denied.html', {})
-
+        sweetify.error(request, 'Access Denied')
+        
 
 @login_required()
 def upload_view(request, property_id):
