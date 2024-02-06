@@ -60,9 +60,10 @@ def register(request):
         user_form = UserForm(request.POST)
         profile_form = ProfileForm(request.POST)
         if user_form.is_valid():
-            if user_form.cleaned_data.get('password') ==user_form.cleaned_data.get('confirm_password'):
+            if user_form.cleaned_data.get('password') == user_form.cleaned_data.get('confirm_password'):
                 user = user_form.save(commit=False)
-                hashed_password = make_password(user_form.cleaned_data['password'])  # Create a user object but don't save
+                hashed_password = make_password(user_form.cleaned_data['password'])
+                # Create a user object but don't save
                 user.password = hashed_password
                 user.save()
                 profile = profile_form.save(commit=False)
@@ -123,7 +124,7 @@ def property_register(request):
         })
     else:
         return render(request, 'access_denied.html', {})
-    
+
 
 @login_required()
 def review_submit(request, property_id):
@@ -149,21 +150,21 @@ def review_submit(request, property_id):
 
             return render(request, 'review.html', {'form': review_form})
         except Document.DoesNotExist:
-            
+
             sweetify.error(request, 'first Your doc should be accepted by admin')
             return redirect('home-page')  # Return an HttpResponse with an appropriate status code
 
     else:
         return render(request, 'access_denied.html', {})
-    
+
 
 @login_required()
 def upload_view(request, property_id):
     form = DocumentForm(request.POST or None, request.FILES or None)
     try:
         Document.objects.get(Q(property_id=property_id) &
-    Q(uploader_id=request.user.profileuser.id) &
-    (Q(status='Pending') | Q(status='Accepted')))
+                             Q(uploader_id=request.user.profileuser.id) &
+                             (Q(status='Pending') | Q(status='Accepted')))
         sweetify.info(request, 'you uploaded your doc')
         return redirect('home-page')
     except Document.DoesNotExist:
