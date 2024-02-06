@@ -66,7 +66,7 @@ class Property(models.Model):
     yard_area = models.PositiveIntegerField(default=0)
     year = models.PositiveIntegerField(validators=[MaxValueValidator(2099)])
     garage = models.BooleanField(default=False)
-    is_available = models.BooleanField(default=False)
+    is_available = models.BooleanField(default=True)
     is_submit = models.BooleanField(default=False)
     house_review = models.FloatField(null=True, blank=True)
     house_owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
