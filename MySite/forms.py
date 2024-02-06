@@ -1,6 +1,12 @@
 from django import forms
 from .models import User, ProfileUser, Property, Review, Document
 
+ROLE_CHOICES = [
+        ('O', 'Owner'),
+        ('T', 'Tenant'),
+        ('U', 'User'),
+    ]
+
 
 class UserForm(forms.ModelForm):
     first_name = forms.CharField(
@@ -60,9 +66,15 @@ class UserForm(forms.ModelForm):
                         'max_length': 'Password Max Length Must Be 30 Characters'}
     )
 
+    requestRole = forms.ChoiceField(
+        label='RequestRole',
+        choices=ROLE_CHOICES,
+    )
+
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email', 'confirm_password']
+        fields = ['first_name', 'last_name', 'username', 'password', 'birth_date', 'phone_number', 'email',
+                  'confirm_password', 'requestRole']
 
 
 class ProfileForm(forms.ModelForm):
