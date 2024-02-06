@@ -2,9 +2,9 @@ from django import forms
 from .models import User, ProfileUser, Property, Review, Document
 
 ROLE_CHOICES = [
-        ('O', 'Owner'),
-        ('T', 'Tenant'),
-        ('U', 'User'),
+        ('House Owner', 'Owner'),
+        ('Tenant', 'Tenant'),
+        ('Normal User', 'User'),
     ]
 
 
