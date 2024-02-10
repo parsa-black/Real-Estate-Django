@@ -1,17 +1,6 @@
 class Dto():
-    def __init__(self, title, description, rent_price, house_city, house_address, bedrooms, bathrooms, area, yard_area,
-                 year, garage, review, quality, location, price, landlord, neighborhood, transportation, owner_number):
+    def __init__(self, title, review, quality, location, price, landlord, neighborhood, transportation):
         self.title = title
-        self.description = description
-        self.rent_price = rent_price
-        self.house_city = house_city
-        self.house_address = house_address
-        self.bedrooms = bedrooms
-        self.bathrooms = bathrooms
-        self.area = area
-        self.yard_area = yard_area
-        self.year = year
-        self.garage = garage
         self.review = review
         self.quality = quality
         self.location = location
@@ -19,7 +8,11 @@ class Dto():
         self.landlord = landlord
         self.neighborhood = neighborhood
         self.transportation = transportation
-        self.owner_number = owner_number
+
+
+class DtoGarage():
+    def __init__(self, garage):
+        self.garage = garage
 
     def convertBooleanToString(self, dto):
         if dto.garage is True:
