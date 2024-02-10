@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +9,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(to right, #8e44ad, #3498db);
+            background-color:#333;
             color: #fff;
         }
 
@@ -32,7 +31,7 @@
         }
 
         nav {
-            background: linear-gradient(to right, #3498db, #2980b9);
+            background-color: #707070;
             padding: 10px;
             text-align: center;
         }
@@ -61,6 +60,7 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s ease;
             background: #fff;
+            color: #c4c4c4;
         }
 
         .property:hover {
@@ -84,7 +84,7 @@
 
         p {
             margin: 0;
-            color: #555;
+            color: #c4c4c4;
         }
 
         footer {
@@ -93,13 +93,14 @@
             position: fixed;
             bottom: 0;
             width: 100%;
-            background: linear-gradient(to right, #8e44ad, #3498db);
+            background-color: #707070;
         }
 
         footer p {
             margin: 0;
             color: #fff;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -111,10 +112,11 @@
             border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
+            color: #d9d9d9;
         }
 
         th {
-            background-color: #3498db;
+            background-color: #707070; /* Dark green header background */
             color: #fff;
         }
 
@@ -124,7 +126,7 @@
         }
 
         .upload-button {
-            background-color: #2ecc71;
+            background-color: #10a656; /* Green button */
             color: #fff;
             padding: 8px 12px;
             border: none;
@@ -133,7 +135,35 @@
         }
 
         .upload-button:hover {
-            background-color: #27ae60;
+            background-color: #218c56; /* Darker green on hover */
+        }
+
+        .search-bar {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .search-bar form {
+            display: inline-block;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+        }
+
+        .search-bar button {
+            padding: 8px 12px;
+            background-color: #10a656; /* Green button */
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .search-bar button:hover {
+            background-color: #138d75; /* Darker green on hover */
         }
 
         /* Responsive styles */
@@ -142,34 +172,6 @@
                 margin: 0 10px;
             }
         }
-        .search-bar {
-    text-align: center;
-    margin: 10px 0;
-    }
-
-    .search-bar form {
-        display: inline-block;
-    }
-
-    .search-bar input[type="text"] {
-        padding: 8px;
-        border: none;
-        border-radius: 4px;
-    }
-
-    .search-bar button {
-        padding: 8px 12px;
-        background-color: #3498db;
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-    }
-
-    .search-bar button:hover {
-        background-color: #2980b9;
-    }
-
     </style>
 </head>
 <body>
@@ -192,7 +194,6 @@
         {% else %}
         <a href="{% url 'login-page' %}">login</a>
         {% endif %}
-        
     </nav>
     <div class="search-bar">
         <form action="{% url 'search-results-page' %}" method="GET">
