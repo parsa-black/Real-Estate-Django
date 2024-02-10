@@ -33,8 +33,9 @@ def search_view(request):
 def property_view(request, property_id):
     prop = Property.objects.select_related('house_owner').get(id=property_id)
     dto = Dto(prop.title, prop.description, prop.rent_price, prop.house_city, prop.house_address, prop.bedrooms,
-              prop.bathrooms, prop.area, prop.yard_area, prop.year, prop.garage, prop.house_review,
-              prop.house_owner.phone_number)
+              prop.bathrooms, prop.area, prop.yard_area, prop.year, prop.garage, prop.house_review, prop.house_quality,
+              prop.house_location, prop.house_price, prop.house_landlord, prop.house_neighborhood,
+              prop.house_transportation, prop.house_owner.phone_number)
     dto.convertBooleanToString(dto)
     return render(request, 'property.html', {'prop': dto})
 
