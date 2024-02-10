@@ -70,14 +70,33 @@ class Property(models.Model):
     is_available = models.BooleanField(default=True)
     is_submit = models.BooleanField(default=False)
     house_review = models.FloatField(null=True, blank=True)
+    house_quality = models.FloatField(null=True, blank=True)
+    house_location = models.FloatField(null=True, blank=True)
+    house_price = models.FloatField(null=True, blank=True)
+    house_landlord = models.FloatField(null=True, blank=True)
+    house_neighborhood = models.FloatField(null=True, blank=True)
+    house_transportation = models.FloatField(null=True, blank=True)
     house_owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
 
     def update_average_rating(self):
         # Retrieve the average rating for the property
         average_rating = Review.objects.filter(property=self).aggregate(Avg('rating'))['rating__avg']
+        average_quality = Review.objects.filter(property=self).aggregate(Avg('quality'))['quality__avg']
+        average_location = Review.objects.filter(property=self).aggregate(Avg('location'))['location__avg']
+        average_price = Review.objects.filter(property=self).aggregate(Avg('price'))['price__avg']
+        average_landlord = Review.objects.filter(property=self).aggregate(Avg('landlord'))['landlord__avg']
+        average_neighborhood = Review.objects.filter(property=self).aggregate(Avg('neighborhood'))['neighborhood__avg']
+        average_transportation = Review.objects.filter(property=self).aggregate(
+            Avg('transportation'))['transportation__avg']
 
-        # Update the house_review field
+        # Update reviews field
         self.house_review = round(average_rating, 2) if average_rating else 0
+        self.house_quality = round(average_quality, 2) if average_quality else 0
+        self.house_location = round(average_location, 2) if average_location else 0
+        self.house_price = round(average_price, 2) if average_price else 0
+        self.house_landlord = round(average_landlord, 2) if average_landlord else 0
+        self.house_neighborhood = round(average_neighborhood, 2) if average_neighborhood else 0
+        self.house_transportation = round(average_transportation, 2) if average_transportation else 0
         self.save()
 
     def __str__(self):
