@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attribute Display</title>
+    <title>Attribute Display with Progress Bars</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background: #f4f4f4;
-            color: #333;
+            background: #333; /* Dark gray background */
+            color: #fff; /* White text color */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -21,14 +21,14 @@
             max-width: 600px;
             width: 100%;
             padding: 30px;
-            background: #fff;
+            background: #444; /* Darker gray background */
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             text-align: center;
         }
 
         h1 {
-            color: #3498db;
+            color: #2ecc71; /* Green title color */
             margin-bottom: 20px;
         }
 
@@ -43,15 +43,16 @@
         }
 
         li strong {
-            color: #3498db;
+            color: #c4c4c4; /* Green strong text color */
         }
     </style>
 </head>
 <body>
 
     <section>
-        <h1>Attribute Display</h1>
+        <h1>Attribute Display with Progress Bars</h1>
         <ul>
+            <!-- Update the value dynamically with your actual data -->
             <li><strong>title:</strong> {{prop.title}}</li>
             <li><strong>Rate:</strong> {{prop.review}}</li>
             <li><strong>Quality:</strong> {{prop.quality}}</li>
@@ -62,5 +63,6 @@
             <li><strong>Transportation:</strong> {{prop.transportation}}</li>
         </ul>
     </section>
+
 </body>
 </html>
