@@ -120,6 +120,10 @@
             color: #fff;
         }
 
+        .th-title {
+            width: 150px;
+        }
+
         .rating-buttons {
             display: flex;
             gap: 5px;
@@ -166,6 +170,14 @@
             background-color: #138d75; /* Darker green on hover */
         }
 
+        .a-space{
+            padding: 3px;
+        }
+
+        .table-view {
+            width: 100px;
+        }
+
         /* Responsive styles */
         @media screen and (max-width: 768px) {
             nav a {
@@ -204,49 +216,92 @@
     <!-- Content Section -->
     <section>
         <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Property Name</th>
-                    <th>Location</th>
-                    <th>Price</th>
-                    <th>Rating</th>
-                    <th>Upload</th>
-                    <th>Contact</th>
-                </tr>
-            </thead>
             <tbody>
                 {% for item in properties %}
-                <tr>
-                    <td>{{item.id}}</td>
-                    <td>{{item.title}}</td>
-                    <td>{{item.house_city}}</td>
-                    <td>{{item.rent_price}}</td>
-                    <td>
-                        <div class="rating-buttons">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                            <i class="far fa-star"></i>
-                        </div>
-                        {{item.house_review}}
-                        <a href="{% url 'review-page' property_id=item.id %}">
-                            <button class="upload-button">Rate</button>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="{% url 'upload-page' property_id=item.id %}">
-                            <button class="upload-button">Upload</button>
-                        </a>
-                    </td>
-                    <td>+98{{item.house_owner.phone_number}}</td>
-                    <td>
-                        <a href="{% url 'property_page' property_id=item.id %}">
-                            <button class="upload-button">View</button>
-                        </a>
-                    </td>
-                </tr>
+                <table>
+                    <tr>
+                        <th class="th-title">{{item.title}}</th>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"> Photo </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>City</th>
+                                        <th>Location</th>
+                                        <th>Bedrooms</th>
+                                        <th>Bathrooms</th>
+                                        <th>Area</th>
+                                        <th>Garage</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>{{ item.house_city }}</td>
+                                    <td>{{ item.house_address }}</td>
+                                    <td>{{ item.bedrooms }}</td>
+                                    <td>{{ item.bathrooms }}</td>
+                                    <td>{{ item.area }}</td>
+                                    <td>
+                                        {% if item.garage %}
+                                            Yes
+                                        {% else %}
+                                            Not
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <thead>
+                                     <tr>
+                                        <th>Price</th>
+                                        <th>Year</th>
+                                        <th>Rate</th>
+                                        <th>Document</th>
+                                        <th>Contact</th>
+                                        <th>Available</th>
+                                    </tr>
+                                </thead>
+                                <tr>
+                                    <td>{{ item.rent_price }}</td>
+                                    <td>{{ item.year }}</td>
+                                    <td>
+                                        {{item.house_review}}
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'upload-page' property_id=item.id %}">
+                                            <button class="upload-button">Upload</button>
+                                        </a>
+                                    </td>
+                                    <td>+98{{ item.house_owner.phone_number }}</td>
+                                    <td>
+                                        {% if item.is_available %}
+                                            Yes
+                                        {% else %}
+                                            Not
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td class="table-view">
+                            <table>
+                                <tr>
+                                    <td rowspan="2">
+                                        <a href="{% url 'property_page' property_id=item.id %}" class="a-space">
+                                            <button class="upload-button">View</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'review-page' property_id=item.id %}" class="a-space">
+                                            <button class="upload-button">Rate</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
                 {% endfor %}
                 <!-- Add more rows as needed -->
             </tbody>
