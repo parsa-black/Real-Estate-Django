@@ -223,7 +223,13 @@
                         <th class="th-title">{{item.title}}</th>
                     </tr>
                     <tr>
-                        <td rowspan="2"> Photo </td>
+                        <td rowspan="2">
+                            {% if item.image %}
+                                item.image
+                            {% else %}
+                                <img src="../images/home.png" alt="home">
+                            {% endif %}
+                        </td>
                     </tr>
                     <tr>
                         <td>

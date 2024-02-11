@@ -187,10 +187,14 @@ class PropertyForm(forms.ModelForm):
         required=False
     )
 
+    image = forms.ImageField(
+        required=False
+    )
+
     class Meta:
         model = Property
         fields = ['title', 'description', 'rent_price', 'house_city', 'house_address', 'bedrooms', 'bathrooms',
-                  'area', 'yard_area', 'year', 'garage']
+                  'area', 'yard_area', 'year', 'garage', 'image']
 
 
 class ReviewForm(forms.ModelForm):
