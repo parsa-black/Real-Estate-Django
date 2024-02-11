@@ -35,7 +35,7 @@ def property_view(request, property_id):
     dto = Dto(prop.title, prop.house_review, prop.house_quality,
               prop.house_location, prop.house_price, prop.house_landlord, prop.house_neighborhood,
               prop.house_transportation)
-    return render(request, 'property.html', {'prop': dto})
+    return render(request, 'Reviews.html', {'prop': dto})
 
 
 def logout_view(request):
@@ -138,7 +138,7 @@ def review_submit(request, property_id):
             else:
                 review_form = ReviewForm()
 
-            return render(request, 'review.html', {'form': review_form})
+            return render(request, 'reviewRegister.html', {'form': review_form})
         except Document.DoesNotExist:
 
             sweetify.error(request, 'first Your doc should be accepted by admin')
