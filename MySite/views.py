@@ -143,10 +143,11 @@ def review_submit(request, property_id):
         except Document.DoesNotExist:
 
             sweetify.error(request, 'first Your doc should be accepted by admin')
-            return redirect('home-page')  # Return an HttpResponse with an appropriate status code
+            return redirect('home-page')
 
     else:
         sweetify.error(request, 'Access Denied')
+        return redirect('home-page')
         
 
 @login_required()
