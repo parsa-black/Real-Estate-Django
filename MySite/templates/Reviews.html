@@ -45,6 +45,11 @@
         li strong {
             color: #c4c4c4; /* Green strong text color */
         }
+
+        p{
+            color: cyan;
+        }
+
     </style>
 </head>
 <body>
@@ -61,6 +66,19 @@
             <li><strong>LandLord:</strong> {{prop.landlord}}</li>
             <li><strong>Neighborhood:</strong> {{prop.neighborhood}}</li>
             <li><strong>Transportation:</strong> {{prop.transportation}}</li>
+            <li><strong>Comments:</strong>
+                {% if comments %}
+                    <ul>
+                        <p>-------------------------------</p>
+                        {% for comment in comments %}
+                            <li>{{ comment.comment }}</li>
+                            <p>-------------------------------</p>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    Not Comment Available
+                {% endif %}
+            </li>
         </ul>
     </section>
 

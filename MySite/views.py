@@ -20,7 +20,7 @@ def search_view(request):
     msg = None
     properties = None
     if query:
-        properties = Property.objects.select_related('house_owner').filter(title__icontains=query)
+        properties = Property.objects.select_related('re').filter(title__icontains=query)
         context = {'properties': properties, 'query': query, 'msg': msg}
         return render(request, 'home.html', context)
     else:
@@ -32,10 +32,11 @@ def search_view(request):
 
 def property_view(request, property_id):
     prop = Property.objects.select_related('house_owner').get(id=property_id)
+    comments = comments = Review.objects.filter(property_id=property_id).order_by('-time').values('comment')
     dto = Dto(prop.title, prop.house_review, prop.house_quality,
               prop.house_location, prop.house_price, prop.house_landlord, prop.house_neighborhood,
               prop.house_transportation)
-    return render(request, 'Reviews.html', {'prop': dto})
+    return render(request, 'Reviews.html', {'prop': dto, 'comments': comments})
 
 
 def logout_view(request):

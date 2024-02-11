@@ -77,7 +77,7 @@ class Property(models.Model):
     house_neighborhood = models.FloatField(null=True, blank=True)
     house_transportation = models.FloatField(null=True, blank=True)
     house_owner = models.ForeignKey(ProfileUser, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='MySite/images', null=True, blank=True)
+    image = models.ImageField(upload_to='MySite/image', null=True, blank=True)
 
     def update_average_rating(self):
         # Retrieve the average rating for the property
