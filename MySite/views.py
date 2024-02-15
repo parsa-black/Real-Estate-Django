@@ -152,27 +152,32 @@ def review_submit(request, property_id):
 
 @login_required()
 def upload_view(request, property_id):
-    form = DocumentForm(request.POST or None, request.FILES or None)
-    try:
-        Document.objects.get(Q(property_id=property_id) &
-                             Q(uploader_id=request.user.profileuser.id) &
-                             (Q(status='Pending') | Q(status='Accepted')))
-        sweetify.info(request, 'you uploaded your doc')
-        return redirect('home-page')
-    except Document.DoesNotExist:
-        if request.method == 'POST':
-            form = DocumentForm(request.POST, request.FILES)
-            if form.is_valid():
-                property_instance = Property.objects.get(id=property_id)
-                upload = form.save(commit=False)
-                upload.file = request.FILES['file']
-                upload.property = property_instance
-                upload.uploader = request.user.profileuser
-                upload.save()
-                sweetify.success(request, 'Your doc have been uploaded. wait for admin to accept it')
-                return redirect('home-page')
+    if request.user.profileuser.role == 'T':
+        form = DocumentForm(request.POST or None, request.FILES or None)
+        try:
+            Document.objects.get(Q(property_id=property_id) &
+                                 Q(uploader_id=request.user.profileuser.id) &
+                                 (Q(status='Pending') | Q(status='Accepted')))
+            sweetify.info(request, 'you uploaded your doc')
+            return redirect('home-page')
+        except Document.DoesNotExist:
+            if request.method == 'POST':
+                form = DocumentForm(request.POST, request.FILES)
+                if form.is_valid():
+                    property_instance = Property.objects.get(id=property_id)
+                    upload = form.save(commit=False)
+                    upload.file = request.FILES['file']
+                    upload.property = property_instance
+                    upload.uploader = request.user.profileuser
+                    upload.save()
+                    sweetify.success(request, 'Your doc have been uploaded. wait for admin to accept it')
+                    return redirect('home-page')
+                else:
+                    form = DocumentForm()
+                return render(request, 'upload.html', {'form': form, 'msg': 'credentials incorrect'})
             else:
-                form = DocumentForm()
-            return render(request, 'upload.html', {'form': form, 'msg': 'credentials incorrect'})
-        else:
-            return render(request, 'upload.html', {'form': form})
+                return render(request, 'upload.html', {'form': form})
+
+    else:
+        sweetify.error(request, 'Access Denied')
+        return redirect('home-page')
