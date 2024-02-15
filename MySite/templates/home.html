@@ -178,6 +178,11 @@
             width: 100px;
         }
 
+        .property-image{
+            width: 300px;
+            height: 300px;
+        }
+
         /* Responsive styles */
         @media screen and (max-width: 768px) {
             nav a {
@@ -227,9 +232,9 @@
                     <tr>
                         <td rowspan="2">
                             {% if item.image %}
-                                item.image
+                                <img class="property-image" src="../image/{{item.image}}" alt="home">
                             {% else %}
-                                <img src="../image/home.png" alt="home">
+                                <img class="property-image" src="../image/MySite/image/home.png" alt="home">
                             {% endif %}
                         </td>
                     </tr>
