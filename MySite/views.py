@@ -1,7 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
-from MySite.dto import Dto
 from .models import Property, Review, Document
 from .forms import LoginForm, UserForm, ProfileForm, PropertyForm, ReviewForm, DocumentForm
 from django.contrib.auth import authenticate, login, logout

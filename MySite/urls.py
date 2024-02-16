@@ -8,7 +8,6 @@ urlpatterns = [
     path('property-register/', views.property_register, name='register-property-page'),
     path('property/', views.property_view, name='property-page'),
     path('property/<int:property_id>', views.single_property, name='single-property-page'),
-    path('property/review/<int:property_id>', views.review_view, name='review_page'),
     path('upload/<int:property_id>', views.upload_view, name='upload-page'),
     path('search/', views.search_view, name='search-results-page'),
     path('review/<int:property_id>', views.review_submit, name='review-register-page'),
