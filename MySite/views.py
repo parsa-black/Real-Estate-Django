@@ -42,15 +42,6 @@ def search_view(request):
     return render(request, 'index.html', context)
 
 
-def review_view(request, property_id):
-    prop = Property.objects.select_related('house_owner').get(id=property_id)
-    comments = comments = Review.objects.filter(property_id=property_id).order_by('-time').values('comment')
-    dto = Dto(prop.title, prop.house_review, prop.house_quality,
-              prop.house_location, prop.house_price, prop.house_landlord, prop.house_neighborhood,
-              prop.house_transportation)
-    return render(request, 'Reviews.html', {'prop': dto, 'comments': comments})
-
-
 def property_view(request):
     properties = Property.objects.select_related('house_owner').filter(is_submit=True)
     return render(request, 'properties.html', {'properties': properties})
@@ -58,7 +49,8 @@ def property_view(request):
 
 def single_property(request, property_id):
     prop = Property.objects.select_related('house_owner').get(id=property_id)
-    return render(request, 'property-single.html', {'prop': prop})
+    comments = comments = Review.objects.filter(property_id=property_id).order_by('-time').values('comment')
+    return render(request, 'property-single.html', {'prop': prop, 'comments': comments})
 
 
 def logout_view(request):

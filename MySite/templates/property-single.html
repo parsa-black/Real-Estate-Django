@@ -141,12 +141,46 @@
             <h2 class="heading text-primary">{{ prop.house_address }}</h2>
             <p class="meta">{{ prop.house_city }}</p>
             <p class="text-black-50">
+               <b>Description</b> <br/>
               {{ prop.description }}
             </p>
             <p class="text-black-50">
-                <b>House Details</b>
+                Rent-Price : <b>{{ prop.rent_price }}</b> <br/>
+                Bedrooms : <b>{{ prop.bedrooms }}</b> <br/>
+                Bathrooms : <b>{{ prop.bathrooms }}</b> <br/>
+                Area : <b>{{ prop.area }}</b> <br/>
+                Yard : <b>{{ prop.yard_area }}</b> <br/>
+                Built-Year : <b>{{ prop.year }}</b> <br/>
+                {% if prop.garage %}
+                    Garage : <b>Yes</b> <br/>
+                {% else %}
+                    Garage : <b>Not</b> <br/>
+                {% endif %}
+                Review : <b>{{ prop.house_review }}</b>
             </p>
-
+            <section>
+                <h1>Attribute Display</h1>
+                <ul>
+                    <!-- Update the value dynamically with your actual data -->
+                    <li><strong>Quality:</strong> {{prop.house_quality}}</li>
+                    <li><strong>Location:</strong> {{prop.house_location}}</li>
+                    <li><strong>Price:</strong> {{prop.house_price}}</li>
+                    <li><strong>LandLord:</strong> {{prop.house_landlord}}</li>
+                    <li><strong>Neighborhood:</strong> {{prop.house_neighborhood}}</li>
+                    <li><strong>Transportation:</strong> {{prop.house_transportation}}</li>
+                    <li><strong>Comments:</strong>
+                        {% if comments %}
+                            <ul>
+                                {% for comment in comments %}
+                                    <li><i>{{ comment.comment }}</i></li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            Not Comment Available
+                        {% endif %}
+                    </li>
+                </ul>
+            </section>
             <div class="d-block agent-box p-5">
               <div class="img mb-4">
                 <img
