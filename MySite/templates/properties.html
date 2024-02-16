@@ -125,7 +125,11 @@
               <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4">
                 <div class="property-item mb-30">
                   <a href="property-single.html" class="img">
-                    <img src="../image/{{property.image}}" alt="home" class="img-fluid" />
+                    {% if property.image %}
+                        <img src="../image/{{property.image}}" alt="home" class="img-fluid" />
+                    {% else %}
+                        <img src="../image/MySite/image/home.jpg" alt="home" class="img-fluid"/>
+                    {% endif %}
                   </a>
 
                   <div class="property-content">
