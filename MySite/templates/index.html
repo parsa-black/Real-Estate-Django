@@ -119,6 +119,7 @@
               class="narrow-w form-search d-flex align-items-stretch mb-3"
               data-aos="fade-up"
               data-aos-delay="200"
+              method="get"
             >
               <input
                 type="text"
@@ -144,7 +145,7 @@
           <div class="col-lg-6 text-lg-end">
             <p>
               <a
-                href="#"
+                href="{% url 'property-page' %}"
                 target="_blank"
                 class="btn btn-primary text-white py-3 px-4"
                 >View all properties</a

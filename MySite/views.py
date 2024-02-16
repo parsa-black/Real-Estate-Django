@@ -32,14 +32,14 @@ def search_view(request):
     msg = None
     properties = None
     if query:
-        properties = Property.objects.select_related('re').filter(title__icontains=query)
+        properties = Property.objects.select_related('re').filter(house_city__icontains=query)
         context = {'properties': properties, 'query': query, 'msg': msg}
-        return render(request, 'home.html', context)
+        return render(request, 'index.html', context)
     else:
         msg = 'Not Found'
 
     context = {'properties': properties, 'query': query, 'msg': msg}
-    return render(request, 'home.html', context)
+    return render(request, 'index.html', context)
 
 
 def review_view(request, property_id):
