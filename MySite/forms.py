@@ -129,6 +129,7 @@ class PropertyForm(forms.ModelForm):
         decimal_places=2,
         min_value=0,
         max_value=9999999,
+        initial=1000000,
         error_messages={'required': 'Please Property Must Have Rent Price',
                         'min_value': 'Please Price can not be less than Zero',
                         'max_value': 'Please Price can not be More than 10 digits'}
@@ -150,6 +151,7 @@ class PropertyForm(forms.ModelForm):
     bedrooms = forms.IntegerField(
         min_value=0,
         max_value=20,
+        initial=0,
         error_messages={'required': 'House Must Have Bedrooms',
                         'max_value': 'Max is 20',
                         'min_value': 'Min is 0'}
@@ -157,12 +159,14 @@ class PropertyForm(forms.ModelForm):
     bathrooms = forms.IntegerField(
         min_value=0,
         max_value=20,
+        initial=0,
         error_messages={'required': 'House Must Have Bathroom',
                         'max_value': 'Max is 20',
                         'min_value': 'Min is 0'}
     )
     area = forms.IntegerField(
         min_value=0,
+        initial=0,
         max_value=99999,
         error_messages={'required': 'Property Must Have Area',
                         'min_value': 'Size Must Be Positive',
@@ -179,6 +183,7 @@ class PropertyForm(forms.ModelForm):
     year = forms.IntegerField(
         min_value=1900,
         max_value=2099,
+        initial=2000,
         error_messages={'required': 'Property Must Have Built Year',
                         'max_value': 'Max is 2099',
                         'min_value': 'Min is 1900'}
