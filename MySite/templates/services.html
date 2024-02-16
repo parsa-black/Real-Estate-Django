@@ -53,18 +53,21 @@
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
             >
               <li><a href="{% url 'home-page' %}">Home</a></li>
-              <li class="has-children">
-                <a href="properties.html">Properties</a>
+              <li>
+                  {% if request.user.is_authenticated %}
+                    <a href="{% url 'logout-page' %}">Logout</a>
+                    {% else %}
+                    <a href="{% url 'login-page' %}">Login</a>
+                  {% endif %}
+              </li>
+              <li class="has-children active">
+                <a href="#">Properties</a>
                 <ul class="dropdown">
-                  <li><a href="#">Buy Property</a></li>
-                  <li><a href="#">Sell Property</a></li>
-                  <li class="has-children">
-                    <a href="#">Dropdown</a>
-                    <ul class="dropdown">
-                      <li><a href="#">Sub Menu One</a></li>
-                      <li><a href="#">Sub Menu Two</a></li>
-                      <li><a href="#">Sub Menu Three</a></li>
-                    </ul>
+                  <li><a href="{% url 'property-page' %}">Show Property</a></li>
+                  <li>
+                      {% if request.user.is_authenticated %}
+                        <a href="{% url 'register-property-page' %}">Add Property</a>
+                      {% endif %}
                   </li>
                 </ul>
               </li>

@@ -61,9 +61,9 @@
                   {% endif %}
               </li>
               <li class="has-children">
-                <a href="properties.html">Properties</a>
+                <a href="#">Properties</a>
                 <ul class="dropdown">
-                  <li><a href="#">Show Property</a></li>
+                  <li><a href="{% url 'property-page' %}">Show Property</a></li>
                   <li>
                       {% if request.user.is_authenticated %}
                         <a href="{% url 'register-property-page' %}">Add Property</a>
