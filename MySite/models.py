@@ -31,6 +31,7 @@ class ProfileUser(models.Model):
     role = models.CharField(
         max_length=1, choices=ROLE_CHOICES, default=UserNormal)
     requestRole = models.CharField(max_length=10, default='User')
+    image = models.ImageField(upload_to='MySite/image', null=True, blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):

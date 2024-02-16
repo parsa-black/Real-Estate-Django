@@ -78,9 +78,14 @@ class ProfileForm(forms.ModelForm):
         label='RequestRole',
         choices=ROLE_CHOICES,
     )
+
+    image = forms.ImageField(
+        required=False
+    )
+
     class Meta:
         model = ProfileUser
-        fields = ['birth_date', 'phone_number', 'requestRole']
+        fields = ['birth_date', 'phone_number', 'requestRole', 'image']
 
 
 class LoginForm(forms.Form):

@@ -183,11 +183,11 @@
             </section>
             <div class="d-block agent-box p-5">
               <div class="img mb-4">
-                <img
-                  src="../../static/images/person_2-min.jpg"
-                  alt="Image"
-                  class="img-fluid"
-                />
+                {% if prop.house_owner.image %}
+                    <img src="../image/{{prop.house_owner.image}}" alt="home" class="img-fluid" />
+                {% else %}
+                    <img src="../../static/images/person_2-min.jpg" alt="Image" class="img-fluid"/>
+                {% endif %}
               </div>
               <div class="text">
                 <h3 class="mb-0">{{ prop.house_owner.first_name }}  {{ prop.house_owner.last_name }}</h3>
