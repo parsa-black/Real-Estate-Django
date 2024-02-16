@@ -56,6 +56,11 @@ def property_view(request):
     return render(request, 'properties.html', {'properties': properties})
 
 
+def single_property(request, property_id):
+    prop = Property.objects.select_related('house_owner').get(id=property_id)
+    return render(request, 'property-single.html', {'prop': prop})
+
+
 def logout_view(request):
     logout(request)
     return redirect('login-page')
