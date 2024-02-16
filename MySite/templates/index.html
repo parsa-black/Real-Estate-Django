@@ -47,7 +47,7 @@
       <div class="container">
         <div class="menu-bg-wrap">
           <div class="site-navigation">
-            <a href="index.html" class="logo m-0 float-start">Property</a>
+            <a href="{% url 'home-page' %}" class="logo m-0 float-start">Property</a>
 
             <ul
               class="js-clone-nav d-none d-lg-inline-block text-start site-menu float-end"
@@ -71,9 +71,9 @@
                   </li>
                 </ul>
               </li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="contact.html">Contact Us</a></li>
+              <li><a href="{% url 'services-page' %}">Services</a></li>
+              <li><a href="{% url 'about-page' %}">About</a></li>
+              <li><a href="{% url 'contact-page' %}">Contact Us</a></li>
             </ul>
 
             <a

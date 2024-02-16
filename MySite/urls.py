@@ -11,4 +11,7 @@ urlpatterns = [
     path('property/<int:property_id>', views.property_view, name='property_page'),
     path('review/<int:property_id>', views.review_submit, name='review-page'),
     path('logout/', views.logout_view, name='logout-page'),
+    path('services', views.services, name='services-page'),
+    path('about', views.about, name='about-page'),
+    path('contact', views.contact, name='contact-page')
 ]

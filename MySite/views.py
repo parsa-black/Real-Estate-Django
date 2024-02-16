@@ -15,6 +15,18 @@ def homepage(request):
     return render(request, 'index.html', {'properties': properties})
 
 
+def services(request):
+    return render(request, 'services.html')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def contact(request):
+    return render(request, 'contact.html')
+
+
 def search_view(request):
     query = request.GET.get('query')
     msg = None
