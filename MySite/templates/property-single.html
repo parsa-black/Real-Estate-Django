@@ -181,6 +181,26 @@
                     </li>
                 </ul>
             </section>
+            <section>
+                <h2>Vote</h2>
+                <ul class="list-unstyled social dark-hover d-flex">
+                  <li class="me-3">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'upload-page' property_id=prop.id %}">
+                            <span class="upload-button">Upload</span>
+                        </a>
+                    {% endif %}
+                  </li>
+                  <li class="me-1">
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'review-register-page' property_id=prop.id %}" class="a-space">
+                            <span class="upload-button">Rate</span>
+                        </a>
+                    {% endif %}
+                  </li>
+                </ul>
+
+            </section>
             <div class="d-block agent-box p-5">
               <div class="img mb-4">
                 {% if prop.house_owner.image %}
