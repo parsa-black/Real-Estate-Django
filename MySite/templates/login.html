@@ -45,15 +45,21 @@
            form .forgot-pass a{
                color: #3bc4ea;
            }
+           .close-btn{
+               color: #ffffff;
+           }
        </style>
    </head>
    <body>
       <div class="center">
-         <input type="checkbox" id="show">
-         <label for="show" class="show-btn">View Form</label>
+{#         <input type="checkbox" id="show">#}
+{#         <label for="show" class="show-btn">View Form</label>#}
 
          <div class="container">
-            <label for="show" class="close-btn fas fa-times" title="close"></label>
+            <a href="{% url 'home-page' %}" >
+                <span class="close-btn fas fa-times">
+                </span>
+            </a>
             <div class="text">
                Login Form
             </div>
