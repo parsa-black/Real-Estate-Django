@@ -138,8 +138,16 @@
             </div>
           </div>
           <div class="col-lg-4">
-            <h2 class="heading text-primary">{{ prop.house_address }}</h2>
-            <p class="meta">{{ prop.house_city }}</p>
+            <h2 class="heading text-primary">{{ prop.title }}</h2>
+            <p class="meta">
+              City:
+              <b>{{ prop.house_city }}</b>
+            </p>
+            
+            <p class="meta">
+              Address:
+              <b>{{ prop.house_address }}</b>
+            </p>
             <p class="text-black-50">
                <b>Description</b> <br/>
               {{ prop.description }}
@@ -357,5 +365,9 @@
     <script src="../../static/js/navbar.js"></script>
     <script src="../../static/js/counter.js"></script>
     <script src="../../static/js/custom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
   </body>
 </html>
+{% load sweetify %}
+{% sweetify %}
+
