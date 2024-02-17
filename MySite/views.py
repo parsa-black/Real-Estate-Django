@@ -1,7 +1,5 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-
-from MySite.dto import Dto
 from .models import Property, Review, Document
 from .forms import LoginForm, UserForm, ProfileForm, PropertyForm, ReviewForm, DocumentForm
 from django.contrib.auth import authenticate, login, logout
@@ -15,28 +13,42 @@ def homepage(request):
     return render(request, 'home.html', {'properties': properties})
 
 
+def services(request):
+    return render(request, 'services.html')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def contact(request):
+    return render(request, 'contact.html')
+
+
 def search_view(request):
     query = request.GET.get('query')
     msg = None
     properties = None
     if query:
-        properties = Property.objects.select_related('re').filter(title__icontains=query)
+        properties = Property.objects.select_related('re').filter(house_city__icontains=query)
         context = {'properties': properties, 'query': query, 'msg': msg}
-        return render(request, 'home.html', context)
+        return render(request, 'index.html', context)
     else:
         msg = 'Not Found'
 
     context = {'properties': properties, 'query': query, 'msg': msg}
-    return render(request, 'home.html', context)
+    return render(request, 'index.html', context)
 
 
-def property_view(request, property_id):
+def property_view(request):
+    properties = Property.objects.select_related('house_owner').filter(is_submit=True)
+    return render(request, 'properties.html', {'properties': properties})
+
+
+def single_property(request, property_id):
     prop = Property.objects.select_related('house_owner').get(id=property_id)
     comments = comments = Review.objects.filter(property_id=property_id).order_by('-time').values('comment')
-    dto = Dto(prop.title, prop.house_review, prop.house_quality,
-              prop.house_location, prop.house_price, prop.house_landlord, prop.house_neighborhood,
-              prop.house_transportation)
-    return render(request, 'Reviews.html', {'prop': dto, 'comments': comments})
+    return render(request, 'property-single.html', {'prop': prop, 'comments': comments})
 
 
 def logout_view(request):
