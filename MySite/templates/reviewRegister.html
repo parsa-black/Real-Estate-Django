@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rating and Comment Form</title>
+    <title>Real-Estate &mdash; Rating&Comment</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            background-image: url('../../static/images/hero_bg_1.jpg');
             margin: 0;
             padding: 0;
             display: flex;
@@ -17,10 +17,11 @@
         }
 
         form {
-            background-color: #fff;
+            backdrop-filter: blur(8px); /* Chrome and Opera */
+            box-shadow: 0px 10px 15px 10px rgb(0 0 0 / 15%);
+            background-color: rgb(228 228 228 / 15%);
             padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             width: 80%;
             max-width: 600px;
         }
@@ -32,16 +33,19 @@
         }
 
         input, textarea {
+            border-radius: 4px;
+            backdrop-filter: blur(8px); /* Chrome and Opera */
+            box-shadow: 0px 10px 15px 10px rgb(0 0 0 / 15%);
+            background-color: rgb(228 228 228 / 15%);
             width: 100%;
             padding: 8px;
             margin-bottom: 12px;
             box-sizing: border-box;
             border: 1px solid #ccc;
-            border-radius: 4px;
         }
 
         button {
-            background-color: #4caf50;
+            background-color: #005555;
             color: #fff;
             padding: 10px 15px;
             border: none;
@@ -51,7 +55,7 @@
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #036464;
         }
     </style>
 </head>

@@ -26,20 +26,18 @@ body{
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-input[type="checkbox"]{
-  display: none;
-}
+/*input[type="checkbox"]{*/
+/*  display: none;*/
+/*}*/
 .container{
-  display: none;
   background: #fff;
   width: 410px;
   padding: 30px;
   box-shadow: 0 0 8px rgba(0,0,0,0.1);
 }
-#show:checked ~ .container{
-  display: block;
-}
+/*#show:checked ~ .container{*/
+/*  display: block;*/
+/*}*/
 .container .close-btn{
   position: absolute;
   right: 20px;
