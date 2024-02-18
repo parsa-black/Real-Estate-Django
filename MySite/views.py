@@ -10,7 +10,7 @@ from django.db.models import Q
 
 def homepage(request):
     properties = Property.objects.select_related('house_owner').filter(is_submit=True)
-    return render(request, 'home.html', {'properties': properties})
+    return render(request, 'index.html', {'properties': properties})
 
 
 def services(request):
