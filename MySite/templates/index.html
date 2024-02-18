@@ -115,7 +115,7 @@
                   <h1 class="heading" data-aos="fade-up">Easiest way to find your dream home</h1>
               {% endif %}
             <form
-              action="#"
+              action="{% url 'search-results-page' %}"
               class="narrow-w form-search d-flex align-items-stretch mb-3"
               data-aos="fade-up"
               data-aos-delay="200"
@@ -171,9 +171,9 @@
                         <div class="price mb-2"><span>${{ property.rent_price }}</span></div>
                         <div>
                           <span class="d-block mb-2 text-black-50"
-                            >{{ property.house_address }}</span
+                            >{{ property.house_city }}</span
                           >
-                          <span class="city d-block mb-3">{{ property.house_city }}</span>
+                          <span class="city d-block mb-3">{{ property.title }}</span>
 
                           <div class="specs d-flex mb-4">
                             <span class="d-block d-flex align-items-center me-3">
@@ -788,5 +788,8 @@
     <script src="../../static/js/navbar.js"></script>
     <script src="../../static/js/counter.js"></script>
     <script src="../../static/js/custom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
   </body>
 </html>
+{% load sweetify %}
+{% sweetify %}
