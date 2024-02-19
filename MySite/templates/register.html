@@ -1,5 +1,5 @@
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/register-style.css' %}">
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
@@ -95,6 +95,35 @@
             color: red;
             margin-top: 10px;
         }
+
+        form .button input{
+            background-image: none;
+           background-color: #005555;
+        }
+
+        form .button input:hover{
+          /* transform: scale(0.99); */
+            background-color: #036464;
+            background-image: none;
+        }
+
+        .user-details .input-box input:focus,
+        .user-details .input-box input:valid{
+          border-color: #005555;
+        }
+
+        #dot-1:checked ~ .category label .one,
+        #dot-2:checked ~ .category label .two,
+        #dot-3:checked ~ .category label .three{
+           background-color: #005555;
+           border-color: #d9d9d9;
+        }
+
+        .container .title::before{
+          background-color: #005555;
+          background-image: none;
+        }
+
     </style>
 </head>
 <body>
