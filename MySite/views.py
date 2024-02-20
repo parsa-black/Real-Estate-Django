@@ -152,7 +152,7 @@ def review_submit(request, property_id):
                         review.property = prop
                         review.save()
                         sweetify.success(request, 'Your review have been Submitted')
-                        return redirect('property-single.html')
+                        return redirect('single-property-page', property_id=property_id)
                 else:
                     review_form = ReviewForm()
 
