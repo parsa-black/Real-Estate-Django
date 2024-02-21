@@ -53,7 +53,6 @@ class UserForm(forms.ModelForm):
                         'max_length': 'Password Max Length Must Be 30 Characters'}
     )
 
-
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username', 'password', 'email',
