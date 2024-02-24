@@ -61,7 +61,7 @@ def register(request):
     msg = None
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        profile_form = ProfileForm(request.POST)
+        profile_form = ProfileForm(request.POST, request.FILES)
         if user_form.is_valid():
             if user_form.cleaned_data.get('password') == user_form.cleaned_data.get('confirm_password'):
                 user = user_form.save(commit=False)
@@ -114,7 +114,7 @@ def property_register(request):
     if not request.user.is_staff:
         if request.user.profileuser.role == 'O':
             if request.method == 'POST':
-                property_form = PropertyForm(request.POST)
+                property_form = PropertyForm(request.POST, request.FILES)
                 if property_form.is_valid():
                     property_instance = property_form.save(commit=False)
                     property_form.instance.house_owner = request.user.profileuser
