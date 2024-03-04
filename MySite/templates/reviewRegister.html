@@ -44,6 +44,35 @@
             border: 1px solid #ccc;
         }
 
+        input[type="range"]::-webkit-slider-thumb{
+            -webkit-appearance: none;
+            appearance: none;
+            width: 40px;
+            height: 40px;
+            background-color: #1a1e21;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        input::after {
+            content: '5';
+            color: #0b373f;
+            font-size: 1rem;
+            position: absolute;
+            left: 101%;
+            top: 26%;
+        }
+
+        input::before {
+            content: '1';
+            color: #0b373f;
+            font-size: 1rem;
+            position: absolute;
+            left: -2%;
+            top: 26%;
+        }
+
         button {
             background-color: #005555;
             color: #fff;
@@ -57,29 +86,45 @@
         button:hover {
             background-color: #036464;
         }
+
+        span{
+            color: #036464;
+        }
+
     </style>
 </head>
 <body>
-
     <form method="POST">
         {% csrf_token %}
-        <label for="rating1">Rate quality:</label>
-        {{form.quality}}
-        <label for="rating2">Rate location:</label>
-        {{form.location}}
-        <label for="rating3">Rate price:</label>
-        {{form.price}}
-        <label for="rating4">Rate landlord:</label>
-        {{form.landlord}}
-        <label for="rating5">Rate neighborhood:</label>
-        {{form.neighborhood}}
-        <label for="rating6">Rate transportation:</label>
-        {{form.transportation}}
+        <label for="rating1">Rate quality: <span id="qualityValue">3</span></label>
+        <input type="range" name="quality" value="3" min="1" max="5" required="" id="id_quality" oninput="updateValue('quality')">
+
+        <label for="rating2">Rate location: <span id="locationValue">3</span></label>
+        <input type="range" name="location" value="3" min="1" max="5" required="" id="id_location" oninput="updateValue('location')">
+
+        <label for="rating3">Rate price: <span id="priceValue">3</span></label>
+        <input type="range" name="price" value="3" min="1" max="5" required="" id="id_price" oninput="updateValue('price')">
+
+        <label for="rating4">Rate landlord: <span id="landlordValue">3</span></label>
+        <input type="range" name="landlord" value="3" min="1" max="5" required="" id="id_landlord" oninput="updateValue('landlord')">
+
+        <label for="rating5">Rate neighborhood: <span id="neighborhoodValue">3</span></label>
+        <input type="range" name="neighborhood" value="3" min="1" max="5" required="" id="id_neighborhood" oninput="updateValue('neighborhood')">
+
+        <label for="rating6">Rate transportation: <span id="transportationValue">3</span></label>
+        <input type="range" name="transportation" value="3" min="1" max="5" required="" id="id_transportation" oninput="updateValue('transportation')">
         <label for="comment5">Comment:</label>
         {{form.comment}}
         <button type="submit">Submit</button>
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
+    <script>
+        function updateValue(fieldName) {
+            var input = document.getElementById('id_' + fieldName);
+            var valueSpan = document.getElementById(fieldName + 'Value');
+            valueSpan.textContent = input.value;
+        }
+    </script>
 </body>
 </html>
 {% load sweetify %}
