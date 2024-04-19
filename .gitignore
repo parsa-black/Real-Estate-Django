@@ -6,3 +6,4 @@ venv
 docker-compose.yml
 HouseRent/__pycache__/
 documents/
+MySite/images
