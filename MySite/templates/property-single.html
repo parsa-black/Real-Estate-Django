@@ -168,6 +168,7 @@
             </p>
             <section>
                 <h1>Attribute Display</h1>
+                <p>Reviews Count: <b>{{ comments_count }}</b></p>
                 <ul>
                     <!-- Update the value dynamically with your actual data -->
                     <li><strong>Quality:</strong> {{prop.house_quality}}</li>
@@ -180,7 +181,18 @@
                         {% if comments %}
                             <ul>
                                 {% for comment in comments %}
-                                    <li><i>{{ comment.comment }}</i></li>
+                                    <li style="border-bottom: 1px solid #ccc; padding-bottom: 10px; margin-bottom: 10px;">
+                                        <i>Time :{{ comment.time }}</i>
+                                        <br>
+                                        <i style="padding-right: 10px">{{ comment.comment }}</i>
+                                        <br>
+                                        <i>
+                                        {% if comment.image %}
+                                            <!-- Display a link to view the image -->
+                                            <a href="{{ comment.image.url }}" target="_blank">View Image</a>
+                                        {% endif %}
+                                        </i>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         {% else %}
