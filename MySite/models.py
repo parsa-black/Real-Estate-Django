@@ -143,6 +143,7 @@ class Review(models.Model):
     rating = models.FloatField(default=1, editable=False)
     comment = models.TextField()
     time = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='Mysite/images', null=True, blank=True)
 
     def save(self, *args, **kwargs):
         # Calculate the average rating

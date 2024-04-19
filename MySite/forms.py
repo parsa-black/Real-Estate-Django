@@ -250,10 +250,13 @@ class ReviewForm(forms.ModelForm):
         error_messages={'required': 'Please provide your Comment',
                         'max_length': 'Description Must Be Under 400 Characters'}
     )
+    image = forms.ImageField(
+        required=False
+    )
 
     class Meta:
         model = Review
-        fields = ['quality', 'location', 'price', 'landlord', 'neighborhood', 'transportation', 'comment']
+        fields = ['quality', 'location', 'price', 'landlord', 'neighborhood', 'transportation', 'comment', 'image']
 
 
 class DocumentForm(forms.ModelForm):

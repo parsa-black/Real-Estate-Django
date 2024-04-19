@@ -48,8 +48,10 @@ def property_view(request):
 
 def single_property(request, property_id):
     prop = Property.objects.select_related('house_owner').get(id=property_id)
-    comments = comments = Review.objects.filter(property_id=property_id).order_by('-time').values('comment')
-    return render(request, 'property-single.html', {'prop': prop, 'comments': comments})
+    comments = comments = Review.objects.filter(property_id=property_id).order_by('-time')
+    comments_count = comments.count()
+    return render(request, 'property-single.html', {'prop': prop, 'comments': comments,
+                                                    'comments_count': comments_count})
 
 
 def logout_view(request):
@@ -144,7 +146,7 @@ def review_submit(request, property_id):
                 return redirect('home-page')
             except Review.DoesNotExist:
                 if request.method == 'POST':
-                    review_form = ReviewForm(request.POST)
+                    review_form = ReviewForm(request.POST, request.FILES)
                     if review_form.is_valid():
                         prop = Property.objects.get(id=property_id)
                         review = review_form.save(commit=False)

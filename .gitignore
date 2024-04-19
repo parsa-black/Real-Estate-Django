@@ -6,4 +6,8 @@ venv
 docker-compose.yml
 HouseRent/__pycache__/
 documents/
+<<<<<<< HEAD
 MySite/images
+=======
+Mysite/images/
+>>>>>>> 4e2d92e83be8e20478e596579493e34a2f73e36c
