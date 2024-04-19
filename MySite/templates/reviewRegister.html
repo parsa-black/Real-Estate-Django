@@ -94,7 +94,7 @@
     </style>
 </head>
 <body>
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="rating1">Rate quality: <span id="qualityValue">3</span></label>
         <input type="range" name="quality" value="3" min="1" max="5" required="" id="id_quality" oninput="updateValue('quality')">
@@ -115,7 +115,9 @@
         <input type="range" name="transportation" value="3" min="1" max="5" required="" id="id_transportation" oninput="updateValue('transportation')">
         <label for="comment5">Comment:</label>
         {{form.comment}}
-        <button type="submit">Submit</button>
+        <label for="image">Image:</label>
+        {{ form.image }}
+        <button type="submit" value="Register">Submit</button>
     </form>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.5/sweetalert2.all.min.js"></script>
     <script>

@@ -144,7 +144,7 @@ def review_submit(request, property_id):
                 return redirect('home-page')
             except Review.DoesNotExist:
                 if request.method == 'POST':
-                    review_form = ReviewForm(request.POST)
+                    review_form = ReviewForm(request.POST, request.FILES)
                     if review_form.is_valid():
                         prop = Property.objects.get(id=property_id)
                         review = review_form.save(commit=False)
